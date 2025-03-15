@@ -1,3 +1,4 @@
+/* General Layout */
 #chatbot-button {
     position: fixed;
     bottom: 20px;
@@ -13,16 +14,115 @@
     cursor: pointer;
     font-size: 24px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    transition: background-color 0.3s ease;
 }
 
+#chatbot-button:hover {
+    background-color: #0056b3;
+}
+
+/* Chatbot container */
 #chatbot-container {
     position: fixed;
-    bottom: 20px;
+    bottom: 80px;
     right: 20px;
-    width: 400px;
-    height: 600px;
-    display: none;  /* Initially hidden */
+    width: 380px;
+    max-height: 90vh;
+    display: none;
     z-index: 9999;
-    border: 2px solid #ccc;
-    border-radius: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Header styling */
+#chatbot-container .header {
+    background: linear-gradient(45deg, #007BFF, #0056b3);
+    padding: 10px 20px;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+}
+
+#chatbot-container .header .close-button, 
+#chatbot-container .header .minimize-button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#chatbot-container .header .close-button:hover, 
+#chatbot-container .header .minimize-button:hover {
+    color: #f1f1f1;
+}
+
+/* Chat messages container */
+#chat-messages {
+    padding: 10px;
+    overflow-y: auto;
+    max-height: calc(100% - 120px);
+    background-color: #f9f9f9;
+}
+
+/* Message styling */
+#chat-messages .message {
+    padding: 8px 12px;
+    border-radius: 15px;
+    margin-bottom: 8px;
+    max-width: 80%;
+    clear: both;
+}
+
+#chat-messages .user {
+    background-color: #007BFF;
+    color: white;
+    float: right;
+}
+
+#chat-messages .bot {
+    background-color: #e0e0e0;
+    color: black;
+    float: left;
+}
+
+/* Input box */
+#user-message {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-top: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+/* Send button */
+#send-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#send-button:hover {
+    background-color: #0056b3;
+}
+
+/* Floating button hover effect */
+#chatbot-button:hover {
+    background-color: #0056b3;
 }
