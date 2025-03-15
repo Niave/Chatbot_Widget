@@ -1,151 +1,9 @@
 (function() {
-    // Create a style element for custom styles
-    const style = document.createElement('style');
-    style.innerHTML = `
-        /* General Layout */
-        #chatbot-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background-color: #007BFF;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 24px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            z-index: 999;
-            transition: background-color 0.3s ease;
-        }
-
-        #chatbot-button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Chatbot container with solid border */
-        #chatbot-container {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 380px;
-            min-height: 50vh;
-            max-height: 90vh;
-            display: none;
-            z-index: 9999;
-            border-radius: 10px;
-            overflow: hidden;
-            background: white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            font-family: 'Arial', sans-serif;
-            border: 3px solid #007BFF;
-        }
-
-        /* Navbar styling */
-        #chatbot-navbar {
-            background-color: #0056b3;
-            padding: 10px;
-            color: white;
-            font-size: 18px;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
-
-        #chatbot-navbar img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        /* Chat messages container */
-        #chat-messages {
-            padding: 10px;
-            overflow-y: auto;
-            max-height: calc(100% - 140px);
-            background-color: #f9f9f9;
-        }
-
-        /* Message styling */
-        #chat-messages .message {
-            padding: 8px 12px;
-            border-radius: 15px;
-            margin-bottom: 8px;
-            max-width: 80%;
-            clear: both;
-            word-wrap: break-word;
-        }
-
-        /* User message */
-        #chat-messages .user {
-            background-color: #007BFF;
-            color: white;
-            float: right;
-            margin-left: 30px;
-            border-radius: 15px 15px 0px 15px;
-        }
-
-        /* Bot message */
-        #chat-messages .bot {
-            background-color: #e0e0e0;
-            color: black;
-            float: left;
-            margin-right: 30px;
-            border-radius: 15px 15px 15px 0px;
-        }
-
-        /* Input box */
-        #chatbot-container .input-box {
-            display: flex;
-            padding: 10px;
-            border-top: 1px solid #ccc;
-            background-color: #f9f9f9;
-        }
-
-        #chatbot-container .input-box input {
-            flex-grow: 1;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-        }
-
-        #chatbot-container .input-box button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px;
-            width: 50px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            margin-left: 10px;
-        }
-
-        #chatbot-container .input-box button:hover {
-            background-color: #0056b3;
-        }
-
-        #chatbot-container .input-box input:focus {
-            outline: none;
-            border-color: #007BFF;
-        }
-
-        /* Ensure that no parent page CSS overrides */
-        * {
-            box-sizing: border-box;
-        }
-    `;
-    document.head.appendChild(style);
-
     // Create the floating button for the chatbot
     const chatbotButton = document.createElement('div');
     chatbotButton.id = 'chatbot-button';
     chatbotButton.innerHTML = '🗨️';
+    const logo = document.createElement('img');
     document.body.appendChild(chatbotButton);
 
     // Create the chatbot container
@@ -158,7 +16,6 @@
     navbar.id = 'chatbot-navbar';
 
     // Add logo to the navbar
-    const logo = document.createElement('img');
     logo.src = 'https://firebasestorage.googleapis.com/v0/b/voiceglow-cdn/o/public%2F90l23re6_.png?alt=media'; // Replace with your logo
     navbar.appendChild(logo);
 
@@ -193,10 +50,14 @@
     // Style the infoContainer
     infoContainer.style.textAlign = 'center'; // Center the content
     infoContainer.style.padding = '10px'; // Optional: Add padding to make the space more visible
+
+    // Style the logo inside the infoContainer
     infoLogo.style.display = 'block';
     infoLogo.style.margin = '0 auto'; // Center the logo horizontally
     infoLogo.style.width = '50px'; // Adjust the width to make the logo smaller
     infoLogo.style.height = 'auto'; // Maintain aspect ratio
+
+    // Style the text inside the infoContainer
     infoMessage.style.fontWeight = 'bold'; // Make the text bold
     infoMessage.style.marginTop = '10px'; // Add some margin above the text
 
@@ -226,12 +87,38 @@
     // Variable to track whether greeting has been shown
     let greetingShown = false;
 
+    // Background color for the chatbot container (can be dynamic or static)
+    const backgroundColor = '#f9f9f9'; // Adjust this as needed (light background color)
+
+    // Set background color for chatbot container
+    chatbotContainer.style.backgroundColor = backgroundColor;
+
+    // Dynamic border color based on background color
+    function getContrastColor(hexColor) {
+        // Convert hex to RGB
+        const rgb = hexColor.replace('#', '');
+        const r = parseInt(rgb.substr(0, 2), 16);
+        const g = parseInt(rgb.substr(2, 2), 16);
+        const b = parseInt(rgb.substr(4, 2), 16);
+        
+        // Calculate brightness using luminance formula
+        const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        
+        // Return a contrasting color (black or white based on brightness)
+        return brightness > 128 ? '#000000' : '#FFFFFF'; // Black or white contrast
+    }
+
+    // Set dynamic border color based on background color
+    const borderColor = getContrastColor(backgroundColor);
+    chatbotContainer.style.border = `1px solid ${borderColor}`;
+
     // Toggle chatbot visibility
     chatbotButton.addEventListener('click', () => {
         if (chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '') {
             chatbotContainer.style.display = 'block';
             if (!greetingShown) {
-                displayMessage(`
+                // Display formatted greeting message inside the message container
+                displayMessage(` 
                     <div style="display: flex; align-items: center;">
                         <div>
                             <p><strong>Hei!</strong> Jeg er <strong>Mustafa</strong> sin AI assistent.</p>
@@ -249,10 +136,17 @@
     });
 
     // Function to display messages
-    function displayMessage(message, sender) {
+    function displayMessage(message, sender, isFirstMessage = false) {
         const messageElement = document.createElement('div');
         messageElement.className = 'message ' + sender;
-        messageElement.innerHTML = message;
+        
+        // If it's the first bot message, remove the "Bot:" text
+        if (isFirstMessage) {
+            messageElement.innerHTML = `<strong>${message}</strong>`;
+        } else {
+            messageElement.innerHTML = message;
+        }
+        
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight; // Automatically scroll to the latest message
 
@@ -262,18 +156,32 @@
         }
     }
 
+    // Function to handle the thinking message disappearing
+    function handleThinkingMessageDisappearance(thinkingMessageElement) {
+        thinkingMessageElement.style.opacity = '0';
+        thinkingMessageElement.style.transition = 'opacity 1s ease-out';
+        setTimeout(() => {
+            thinkingMessageElement.remove(); // Remove it after the fade-out effect
+        }, 1000); // Duration of the fade-out effect
+    }
+
     // Handle send button click
     function sendMessage() {
         const userMessage = userMessageInput.value.trim();
         if (userMessage) {
             displayMessage(userMessage, 'user');  // Display user's message
             userMessageInput.value = ''; // Clear input
-            sendMessageToMake(userMessage);
+
+            // Display "thinking..." message from bot
+            const thinkingMessage = displayMessage("⏳ Thinking...", 'bot', true);
+
+            // Call sendMessageToMake and remove "thinking..." message after response
+            sendMessageToMake(userMessage, thinkingMessage);
         }
     }
 
     // Send message to external service
-    async function sendMessageToMake(message) {
+    async function sendMessageToMake(message, thinkingMessageElement) {
         const webhookURL = 'https://hook.eu2.make.com/o7saj7j0sr2xt4ny3aofuvbfw2q5fevv';  // Replace with actual webhook
 
         try {
@@ -296,6 +204,10 @@
             try {
                 const data = JSON.parse(responseText);  // Try to parse it as JSON
                 if (data.response) {
+                    // Remove the "thinking..." message with effect
+                    handleThinkingMessageDisappearance(thinkingMessageElement);
+
+                    // Display actual response
                     displayMessage(data.response, 'bot');
                 } else {
                     console.error('Response does not contain "response" field');
