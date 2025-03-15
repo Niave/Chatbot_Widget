@@ -19,7 +19,7 @@
     chatbotButton.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
     document.body.appendChild(chatbotButton);
 
-    // Create the chatbot container that holds the iframe
+    // Create the chatbot container
     var chatbotContainer = document.createElement('div');
     chatbotContainer.id = 'chatbot-container';
     chatbotContainer.style.position = 'fixed';
@@ -27,26 +27,82 @@
     chatbotContainer.style.right = '20px';
     chatbotContainer.style.width = '400px';
     chatbotContainer.style.height = '600px';
-    chatbotContainer.style.display = 'none';  // Initially hidden
+    chatbotContainer.style.display = 'none';
     chatbotContainer.style.zIndex = '9999';
     chatbotContainer.style.border = '2px solid #ccc';
     chatbotContainer.style.borderRadius = '8px';
 
-    // Create an iframe to embed the chatbot UI (connected to Make)
-    var iframe = document.createElement('iframe');
-    iframe.src = 'https://hook.eu2.make.com/o7saj7j0sr2xt4ny3aofuvbfw2q5fevv';  // Replace with your chatbot URL (connected to Make)
-    iframe.width = '100%';
-    iframe.height = '100%';
-    iframe.style.border = 'none';
-    chatbotContainer.appendChild(iframe);
+    // Create chat messages container
+    var chatMessages = document.createElement('div');
+    chatMessages.id = 'chat-messages';
+    chatMessages.style.overflowY = 'auto';
+    chatMessages.style.height = '100%';
+    chatbotContainer.appendChild(chatMessages);
+
+    // Create the user input section
+    var userMessageInput = document.createElement('input');
+    userMessageInput.id = 'user-message';
+    userMessageInput.type = 'text';
+    userMessageInput.style.width = '100%';
+    userMessageInput.style.height = '50px';
+    chatbotContainer.appendChild(userMessageInput);
+
+    var sendButton = document.createElement('button');
+    sendButton.id = 'send-button';
+    sendButton.textContent = 'Send';
+    chatbotContainer.appendChild(sendButton);
+
     document.body.appendChild(chatbotContainer);
 
-    // Toggle the visibility of the chatbot when the button is clicked
+    // Toggle visibility of the chatbot container when the button is clicked
     chatbotButton.addEventListener('click', function() {
         if (chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '') {
             chatbotContainer.style.display = 'block';
         } else {
             chatbotContainer.style.display = 'none';
         }
+    });
+
+    // Function to display messages in the chat window
+    function displayMessage(message, sender) {
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message;
+        messageElement.classList.add(sender); // Add 'user' or 'bot' class for styling
+        chatMessages.appendChild(messageElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the latest message
+    }
+
+    // Send message to Make Webhook
+    async function sendMessageToMake(message) {
+        const webhookURL = 'https://hook.eu2.make.com/o7saj7j0sr2xt4ny3aofuvbfw2q5fevv'; // Replace with your Make webhook URL
+
+        try {
+            const response = await fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message }), // Send the user message to Make
+            });
+
+            const data = await response.json();
+
+            // If Make sends a response, display it
+            if (data.response) {
+                displayMessage('Bot: ' + data.response, 'bot');
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
+    }
+
+    // Handle send button click
+    sendButton.addEventListener('click', () => {
+        const userMessage = userMessageInput.value.trim();
+        if (userMessage === "") return; // Do not send if message is empty
+
+        displayMessage('User: ' + userMessage, 'user');
+        userMessageInput.value = ''; // Clear input field
+        sendMessageToMake(userMessage);
     });
 })();
