@@ -34,7 +34,7 @@
 
     // Create an iframe to embed the chatbot UI (connected to Make)
     var iframe = document.createElement('iframe');
-    iframe.src = 'https://your-chatbot-url.com';  // Replace with your chatbot URL (connected to Make)
+    iframe.src = 'https://hook.eu2.make.com/o7saj7j0sr2xt4ny3aofuvbfw2q5fevv';  // Replace with your chatbot URL (connected to Make)
     iframe.width = '100%';
     iframe.height = '100%';
     iframe.style.border = 'none';
