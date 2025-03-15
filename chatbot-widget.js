@@ -1,128 +1,84 @@
 (function() {
-    // Create a floating button for the chatbot
-    var chatbotButton = document.createElement('div');
+    // Create the floating button for the chatbot
+    const chatbotButton = document.createElement('div');
     chatbotButton.id = 'chatbot-button';
     chatbotButton.innerHTML = '🗨️';
-    chatbotButton.style.position = 'fixed';
-    chatbotButton.style.bottom = '30px';  // Adjust bottom spacing
-    chatbotButton.style.right = '30px';  // Adjust right spacing
-    chatbotButton.style.width = '50px';
-    chatbotButton.style.height = '50px';
-    chatbotButton.style.backgroundColor = '#007BFF';
-    chatbotButton.style.color = 'white';
-    chatbotButton.style.borderRadius = '50%';
-    chatbotButton.style.display = 'flex';
-    chatbotButton.style.justifyContent = 'center';
-    chatbotButton.style.alignItems = 'center';
-    chatbotButton.style.cursor = 'pointer';
-    chatbotButton.style.fontSize = '24px';
-    chatbotButton.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
     document.body.appendChild(chatbotButton);
 
     // Create the chatbot container
-    var chatbotContainer = document.createElement('div');
+    const chatbotContainer = document.createElement('div');
     chatbotContainer.id = 'chatbot-container';
-    chatbotContainer.style.position = 'fixed';
-    chatbotContainer.style.bottom = '30px';  // Adjust bottom spacing
-    chatbotContainer.style.right = '30px';  // Adjust right spacing
-    chatbotContainer.style.width = '400px';
-    chatbotContainer.style.height = '600px';
-    chatbotContainer.style.display = 'none';
-    chatbotContainer.style.zIndex = '9999';
-    chatbotContainer.style.border = '2px solid #ccc';
-    chatbotContainer.style.borderRadius = '8px';
+    document.body.appendChild(chatbotContainer);
 
-    // Create the header with Close and Minimize buttons
-    var header = document.createElement('div');
-    header.style.backgroundColor = '#007BFF';
-    header.style.color = 'white';
-    header.style.padding = '10px';
-    header.style.textAlign = 'center';
-    header.style.cursor = 'pointer';
+    // Create header for chatbot
+    const header = document.createElement('div');
+    header.className = 'header';
     header.textContent = 'Chatbot';
+
+    // Create Close button
+    const closeButton = document.createElement('button');
+    closeButton.className = 'close-button';
+    closeButton.innerHTML = '❌';
+
+    // Create Minimize button
+    const minimizeButton = document.createElement('button');
+    minimizeButton.className = 'minimize-button';
+    minimizeButton.innerHTML = '🔽';
+
+    header.appendChild(minimizeButton);
+    header.appendChild(closeButton);
     chatbotContainer.appendChild(header);
 
-    // Create the Close button
-    var closeButton = document.createElement('button');
-    closeButton.textContent = 'Close';
-    closeButton.style.position = 'absolute';
-    closeButton.style.top = '10px';
-    closeButton.style.right = '10px';
-    closeButton.style.backgroundColor = 'red';
-    closeButton.style.color = 'white';
-    closeButton.style.border = 'none';
-    closeButton.style.borderRadius = '5px';
-    closeButton.style.padding = '5px 10px';
-    chatbotContainer.appendChild(closeButton);
-
-    // Create the Minimize button
-    var minimizeButton = document.createElement('button');
-    minimizeButton.textContent = 'Minimize';
-    minimizeButton.style.position = 'absolute';
-    minimizeButton.style.top = '10px';
-    minimizeButton.style.right = '80px';
-    minimizeButton.style.backgroundColor = '#f39c12';
-    minimizeButton.style.color = 'white';
-    minimizeButton.style.border = 'none';
-    minimizeButton.style.borderRadius = '5px';
-    minimizeButton.style.padding = '5px 10px';
-    chatbotContainer.appendChild(minimizeButton);
-
-    // Create chat messages container
-    var chatMessages = document.createElement('div');
+    // Create message container
+    const chatMessages = document.createElement('div');
     chatMessages.id = 'chat-messages';
-    chatMessages.style.overflowY = 'auto';
-    chatMessages.style.height = '80%';
     chatbotContainer.appendChild(chatMessages);
 
-    // Create the user input section
-    var userMessageInput = document.createElement('input');
+    // Create message input field
+    const userMessageInput = document.createElement('input');
     userMessageInput.id = 'user-message';
     userMessageInput.type = 'text';
-    userMessageInput.style.width = '100%';
-    userMessageInput.style.height = '50px';
     chatbotContainer.appendChild(userMessageInput);
 
-    var sendButton = document.createElement('button');
+    // Create send button
+    const sendButton = document.createElement('button');
     sendButton.id = 'send-button';
     sendButton.textContent = 'Send';
     chatbotContainer.appendChild(sendButton);
 
-    document.body.appendChild(chatbotContainer);
-
-    // Toggle visibility of the chatbot container when the button is clicked
-    chatbotButton.addEventListener('click', function() {
+    // Toggle chatbot visibility
+    chatbotButton.addEventListener('click', () => {
         if (chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '') {
             chatbotContainer.style.display = 'block';
-            displayMessage('Bot: Hello! How can I assist you today?', 'bot');  // Greeting message
+            displayMessage('Bot: Hello! How can I assist you today?', 'bot');
         } else {
             chatbotContainer.style.display = 'none';
         }
     });
 
-    // Close button functionality
-    closeButton.addEventListener('click', function() {
+    // Close chatbot functionality
+    closeButton.addEventListener('click', () => {
         chatbotContainer.style.display = 'none';
     });
 
-    // Minimize button functionality
-    minimizeButton.addEventListener('click', function() {
+    // Minimize chatbot functionality
+    minimizeButton.addEventListener('click', () => {
         chatbotContainer.style.display = 'none';
-        chatbotButton.style.display = 'flex'; // Keep the button visible for re-opening
+        chatbotButton.style.display = 'flex';
     });
 
-    // Function to display messages in the chat window
+    // Function to display messages
     function displayMessage(message, sender) {
         const messageElement = document.createElement('div');
+        messageElement.className = 'message ' + sender;
         messageElement.textContent = message;
-        messageElement.classList.add(sender); // Add 'user' or 'bot' class for styling
         chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the latest message
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    // Send message to Make Webhook
+    // Send message to external service
     async function sendMessageToMake(message) {
-        const webhookURL = 'https://hook.eu2.make.com/o7saj7j0sr2xt4ny3aofuvbfw2q5fevv'; // Replace with your Make webhook URL
+        const webhookURL = 'https://hook.eu2.make.com/o7saj7j0sr2xt4ny3aofuvbfw2q5fevv';  // Replace with actual webhook
 
         try {
             const response = await fetch(webhookURL, {
@@ -130,27 +86,24 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message: message }), // Send the user message to Make
+                body: JSON.stringify({ message: message })
             });
-
             const data = await response.json();
-
-            // If Make sends a response, display it
             if (data.response) {
                 displayMessage('Bot: ' + data.response, 'bot');
             }
         } catch (error) {
-            console.error('Error sending message:', error);
+            console.error('Error:', error);
         }
     }
 
     // Handle send button click
     sendButton.addEventListener('click', () => {
         const userMessage = userMessageInput.value.trim();
-        if (userMessage === "") return; // Do not send if message is empty
-
-        displayMessage('User: ' + userMessage, 'user');
-        userMessageInput.value = ''; // Clear input field
-        sendMessageToMake(userMessage);
+        if (userMessage) {
+            displayMessage('User: ' + userMessage, 'user');
+            userMessageInput.value = ''; // Clear input
+            sendMessageToMake(userMessage);
+        }
     });
 })();
