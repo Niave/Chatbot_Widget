@@ -28,6 +28,7 @@
     bottom: 80px !important;
     right: 20px !important;
     width: 380px !important;
+     min-height: 50vh !important;
     max-height: 90vh !important;
     display: none !important;
     z-index: 9999 !important;
