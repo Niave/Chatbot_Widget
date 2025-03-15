@@ -1,132 +1,144 @@
 /* General Layout */
 #chatbot-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    background-color: #007BFF;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 24px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    transition: background-color 0.3s ease;
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    width: 50px !important;
+    height: 50px !important;
+    background-color: #007BFF !important;
+    color: white !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    cursor: pointer !important;
+    font-size: 24px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+    z-index: 999 !important;
+    transition: background-color 0.3s ease !important;
 }
 
 #chatbot-button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3 !important;
 }
 
 /* Chatbot container with solid border */
 #chatbot-container {
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    width: 380px;
-    max-height: 90vh;
-    display: none;
-    z-index: 9999;
-    border-radius: 10px;
-    overflow: hidden;
-    background: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
-    border: 3px solid #007BFF; /* Solid border around the container */
+    position: fixed !important;
+    bottom: 80px !important;
+    right: 20px !important;
+    width: 380px !important;
+    max-height: 90vh !important;
+    display: none !important;
+    z-index: 9999 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    background: white !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    font-family: 'Arial', sans-serif !important;
+    border: 3px solid #007BFF !important;
 }
 
 /* Navbar styling */
 #chatbot-navbar {
-    background-color: #0056b3; /* Different background color for navbar */
-    padding: 10px;
-    color: white;
-    font-size: 18px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    background-color: #0056b3 !important;
+    padding: 10px !important;
+    color: white !important;
+    font-size: 18px !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
 }
 
 #chatbot-navbar img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50% !important;
+    margin-right: 10px !important;
 }
 
 /* Chat messages container */
 #chat-messages {
-    padding: 10px;
-   /* min-height: 400px;*/
-    overflow-y: auto;
-    max-height: calc(100% - 140px); /* Adjusted height to account for navbar */
-    background-color: #f9f9f9;
+    padding: 10px !important;
+    overflow-y: auto !important;
+    max-height: calc(100% - 140px) !important;
+    background-color: #f9f9f9 !important;
 }
 
 /* Message styling */
 #chat-messages .message {
-    padding: 8px 12px;
-    border-radius: 15px;
-    margin-bottom: 8px;
-    max-width: 80%;
-    clear: both;
-    word-wrap: break-word;
+    padding: 8px 12px !important;
+    border-radius: 15px !important;
+    margin-bottom: 8px !important;
+    max-width: 80% !important;
+    clear: both !important;
+    word-wrap: break-word !important;
 }
 
 /* User message */
 #chat-messages .user {
-    background-color: #007BFF;
-    color: white;
-    float: right;
-    margin-left: 30px;
-    border-radius: 15px 15px 0px 15px;
+    background-color: #007BFF !important;
+    color: white !important;
+    float: right !important;
+    margin-left: 30px !important;
+    border-radius: 15px 15px 0px 15px !important;
 }
 
 /* Bot message */
 #chat-messages .bot {
-    background-color: #e0e0e0;
-    color: black;
-    float: left;
-    margin-right: 30px;
-    border-radius: 15px 15px 15px 0px;
+    background-color: #e0e0e0 !important;
+    color: black !important;
+    float: left !important;
+    margin-right: 30px !important;
+    border-radius: 15px 15px 15px 0px !important;
 }
 
 /* Input box */
 #chatbot-container .input-box {
-    display: flex;
-    padding: 10px;
-    border-top: 1px solid #ccc;
-    background-color: #f9f9f9;
+    display: flex !important;
+    padding: 10px !important;
+    border-top: 1px solid #ccc !important;
+    background-color: #f9f9f9 !important;
 }
 
 #chatbot-container .input-box input {
-    flex-grow: 1;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 16px;
+    flex-grow: 1 !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+    border: 1px solid #ccc !important;
+    font-size: 16px !important;
 }
 
 #chatbot-container .input-box button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px;
-    width: 50px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    margin-left: 10px;
+    background-color: #007BFF !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px !important;
+    width: 50px !important;
+    cursor: pointer !important;
+    border-radius: 5px !important;
+    transition: background-color 0.3s ease !important;
+    margin-left: 10px !important;
 }
 
 #chatbot-container .input-box button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3 !important;
 }
 
 #chatbot-container .input-box input:focus {
-    outline: none;
-    border-color: #007BFF;
+    outline: none !important;
+    border-color: #007BFF !important;
+}
+
+/* Ensure that no parent page CSS overrides */
+* {
+    box-sizing: border-box !important;
+}
+
+/* For the iframe itself, prevent overriding */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100% !important;
+    width: 100% !important;
 }
