@@ -1,44 +1,33 @@
-#chat-widget {
+/* Basic Styling for the chatbot and button */
+#chatbot-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 300px;
-    height: 400px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    height: 600px;
+    display: none;
+    z-index: 9999;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+#chatbot-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
-}
-#chat-header {
-    background-color: #0078d4;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    border-radius: 10px 10px 0 0;
-}
-#chat-messages {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    background-color: #f9f9f9;
-}
-#user-message {
-    width: calc(100% - 60px);
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-#send-button {
-    background-color: #0078d4;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+    font-size: 24px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-#send-button:hover {
-    background-color: #005bb5;
+
+#chatbot-button:hover {
+    background-color: #0056b3;
 }
