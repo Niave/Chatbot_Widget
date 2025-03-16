@@ -3,30 +3,172 @@
     const chatbotButton = document.createElement('div');
     chatbotButton.id = 'chatbot-button';
     chatbotButton.innerHTML = '🗨️';
-    const logo = document.createElement('img');
+
+    // Apply styles to the button
+    chatbotButton.style.position = 'fixed';
+    chatbotButton.style.bottom = '20px';  // Place at the bottom
+    chatbotButton.style.right = '20px';  // Place at the right
+    chatbotButton.style.width = '60px';  // Set size
+    chatbotButton.style.height = '60px';  // Set size
+    chatbotButton.style.backgroundColor = '#007BFF';  // Blue background color
+    chatbotButton.style.color = 'white';  // White icon color
+    chatbotButton.style.borderRadius = '50%';  // Rounded button
+    chatbotButton.style.display = 'flex';  // Use flexbox to center the icon
+    chatbotButton.style.justifyContent = 'center';  // Center content horizontally
+    chatbotButton.style.alignItems = 'center';  // Center content vertically
+    chatbotButton.style.fontSize = '30px';  // Increase the size of the icon
+    chatbotButton.style.cursor = 'pointer';  // Make it clickable
+    chatbotButton.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';  // Shadow for depth
+    chatbotButton.style.transition = 'background-color 0.3s ease';  // Smooth hover transition
+
+    // Prevent text selection on the button
+    chatbotButton.style.userSelect = 'none';  // Disable text selection
+
+    // Hover effect for the button
+    chatbotButton.addEventListener('mouseover', () => {
+        chatbotButton.style.backgroundColor = '#0056b3';  // Darker blue on hover
+    });
+
+    chatbotButton.addEventListener('mouseout', () => {
+        chatbotButton.style.backgroundColor = '#007BFF';  // Original blue color
+    });
+
+    // Append the button to the document body directly
     document.body.appendChild(chatbotButton);
 
-    // Create the chatbot container
+    // Create a container for the shadow DOM and attach a shadow root
+    const shadowHost = document.createElement('div');
+    document.body.appendChild(shadowHost);
+
+    const shadowRoot = shadowHost.attachShadow({ mode: 'open' });
+
+    // Inject the CSS styles into the shadow DOM
+    const style = document.createElement('style');
+    style.textContent = `
+        /* Chatbot container with solid border */
+        #chatbot-container {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 380px;
+            min-height: 50vh;
+            max-height: 90vh;
+            display: none;
+            z-index: 9999;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            font-family: 'Arial', sans-serif;
+            border: 3px solid #007BFF;
+        }
+
+        /* Navbar styling */
+        #chatbot-navbar {
+            background-color: #0056b3;
+            padding: 10px;
+            color: white;
+            font-size: 18px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        #chatbot-navbar img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* Chat messages container */
+        #chat-messages {
+            padding: 10px;
+            overflow-y: auto;
+            max-height: calc(100% - 140px);
+            background-color: #f9f9f9;
+        }
+
+        /* Message styling */
+        #chat-messages .message {
+            padding: 8px 12px;
+            border-radius: 15px;
+            margin-bottom: 8px;
+            max-width: 80%;
+            clear: both;
+            word-wrap: break-word;
+        }
+
+        /* User message */
+        #chat-messages .user {
+            background-color: #007BFF;
+            color: white;
+            float: right;
+            margin-left: 30px;
+            border-radius: 15px 15px 0px 15px;
+        }
+
+        /* Bot message */
+        #chat-messages .bot {
+            background-color: #e0e0e0;
+            color: black;
+            float: left;
+            margin-right: 30px;
+            border-radius: 15px 15px 15px 0px;
+        }
+
+        /* Input box */
+        #chatbot-container .input-box {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+
+        #chatbot-container .input-box input {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        #chatbot-container .input-box button {
+            padding: 10px;
+            margin-left: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #chatbot-container .input-box button:hover {
+            background-color: #0056b3;
+        }
+    `;
+    shadowRoot.appendChild(style);
+
+    // Create the chatbot container in the shadow DOM
     const chatbotContainer = document.createElement('div');
     chatbotContainer.id = 'chatbot-container';
-    document.body.appendChild(chatbotContainer);
+    shadowRoot.appendChild(chatbotContainer);
 
     // Create navbar for chatbot with logo and title
     const navbar = document.createElement('div');
     navbar.id = 'chatbot-navbar';
 
-    // Add logo to the navbar
+    const logo = document.createElement('img');
     logo.src = 'https://firebasestorage.googleapis.com/v0/b/voiceglow-cdn/o/public%2F90l23re6_.png?alt=media'; // Replace with your logo
     navbar.appendChild(logo);
 
-    // Add title to the navbar
     const title = document.createElement('span');
     title.textContent = 'Mustafa - AI Assistent';
     navbar.appendChild(title);
 
     chatbotContainer.appendChild(navbar);
 
-    // Create message container and move infoContainer into it
+    // Create message container
     const chatMessages = document.createElement('div');
     chatMessages.id = 'chat-messages';
     chatbotContainer.appendChild(chatMessages);
@@ -34,11 +176,11 @@
     // Create the infoContainer that will be part of the chat scroll
     const infoContainer = document.createElement('div');
     infoContainer.id = 'info-container';
-    chatMessages.appendChild(infoContainer); // Add it to chatMessages so it scrolls
+    chatMessages.appendChild(infoContainer);
 
     // Create logo for the info container
     const infoLogo = document.createElement('img');
-    infoLogo.src = 'https://firebasestorage.googleapis.com/v0/b/voiceglow-cdn/o/public%2Fnew_logo_example.png?alt=media'; // Same or different logo as above
+    infoLogo.src = 'https://firebasestorage.googleapis.com/v0/b/voiceglow-cdn/o/public%2Fnew_logo_example.png?alt=media';
     infoLogo.id = 'info-logo';
     infoContainer.appendChild(infoLogo);
 
@@ -48,25 +190,25 @@
     infoContainer.appendChild(infoMessage);
 
     // Style the infoContainer
-    infoContainer.style.textAlign = 'center'; // Center the content
-    infoContainer.style.padding = '10px'; // Optional: Add padding to make the space more visible
+    infoContainer.style.textAlign = 'center';
+    infoContainer.style.padding = '10px';
 
     // Style the logo inside the infoContainer
     infoLogo.style.display = 'block';
-    infoLogo.style.margin = '0 auto'; // Center the logo horizontally
-    infoLogo.style.width = '50px'; // Adjust the width to make the logo smaller
-    infoLogo.style.height = 'auto'; // Maintain aspect ratio
+    infoLogo.style.margin = '0 auto';
+    infoLogo.style.width = '50px';
+    infoLogo.style.height = 'auto';
 
     // Style the text inside the infoContainer
-    infoMessage.style.fontWeight = 'bold'; // Make the text bold
-    infoMessage.style.marginTop = '10px'; // Add some margin above the text
+    infoMessage.style.fontWeight = 'bold';
+    infoMessage.style.marginTop = '10px';
 
     // Set height, max-height, and overflow for chat messages to ensure scrollability
-    chatMessages.style.minHeight = '200px'; // Minimum height for the chatbox (you can adjust this value)
-    chatMessages.style.maxHeight = '400px'; // Maximum height for the chatbox
-    chatMessages.style.overflowY = 'hidden'; // Initially hide the scrollbar
-    chatMessages.style.padding = '10px'; // Optional: Add padding for better spacing
-    chatMessages.style.transition = 'max-height 0.3s ease-in-out'; // Smooth transition for height change
+    chatMessages.style.minHeight = '200px';
+    chatMessages.style.maxHeight = '400px';
+    chatMessages.style.overflowY = 'hidden';
+    chatMessages.style.padding = '10px';
+    chatMessages.style.transition = 'max-height 0.3s ease-in-out';
 
     // Create message input field and send button container
     const inputBox = document.createElement('div');
@@ -93,25 +235,6 @@
     // Set background color for chatbot container
     chatbotContainer.style.backgroundColor = backgroundColor;
 
-    // Dynamic border color based on background color
-    function getContrastColor(hexColor) {
-        // Convert hex to RGB
-        const rgb = hexColor.replace('#', '');
-        const r = parseInt(rgb.substr(0, 2), 16);
-        const g = parseInt(rgb.substr(2, 2), 16);
-        const b = parseInt(rgb.substr(4, 2), 16);
-        
-        // Calculate brightness using luminance formula
-        const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-        
-        // Return a contrasting color (black or white based on brightness)
-        return brightness > 128 ? '#000000' : '#FFFFFF'; // Black or white contrast
-    }
-
-    // Set dynamic border color based on background color
-    const borderColor = getContrastColor(backgroundColor);
-    chatbotContainer.style.border = `1px solid ${borderColor}`;
-
     // Toggle chatbot visibility
     chatbotButton.addEventListener('click', () => {
         if (chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '') {
@@ -128,7 +251,7 @@
                         </div>
                     </div>
                 `, 'bot');
-                greetingShown = true; // Prevent showing greeting message again
+                greetingShown = true;
             }
         } else {
             chatbotContainer.style.display = 'none';
@@ -140,7 +263,6 @@
         const messageElement = document.createElement('div');
         messageElement.className = 'message ' + sender;
         
-        // If it's the first bot message, remove the "Bot:" text
         if (isFirstMessage) {
             messageElement.innerHTML = `<strong>${message}</strong>`;
         } else {
@@ -148,11 +270,10 @@
         }
         
         chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Automatically scroll to the latest message
+        chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // Check if the messages overflow beyond max height
         if (chatMessages.scrollHeight > chatMessages.offsetHeight) {
-            chatMessages.style.overflowY = 'scroll'; // Show scroll when overflow occurs
+            chatMessages.style.overflowY = 'scroll';
         }
     }
 
@@ -161,76 +282,38 @@
         thinkingMessageElement.style.opacity = '0';
         thinkingMessageElement.style.transition = 'opacity 1s ease-out';
         setTimeout(() => {
-            thinkingMessageElement.remove(); // Remove it after the fade-out effect
-        }, 1000); // Duration of the fade-out effect
+            thinkingMessageElement.remove();
+        }, 1000);
     }
 
     // Handle send button click
     function sendMessage() {
         const userMessage = userMessageInput.value.trim();
         if (userMessage) {
-            displayMessage(userMessage, 'user');  // Display user's message
-            userMessageInput.value = ''; // Clear input
+            displayMessage(userMessage, 'user');
+            userMessageInput.value = '';
 
-            // Display "thinking..." message from bot
             const thinkingMessage = displayMessage("⏳ Thinking...", 'bot', true);
-
-            // Call sendMessageToMake and remove "thinking..." message after response
             sendMessageToMake(userMessage, thinkingMessage);
         }
     }
 
     // Send message to external service
     async function sendMessageToMake(message, thinkingMessageElement) {
-        const webhookURL = 'https://hook.eu2.make.com/o7saj7j0sr2xt4ny3aofuvbfw2q5fevv';  // Replace with actual webhook
-
-        try {
-            const response = await fetch(webhookURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ user_message: message })
-            });
-
-            // Check if the response is ok (status 2xx)
-            if (!response.ok) {
-                console.error(`Error: HTTP status ${response.status}`);
-                return;
-            }
-
-            // Try parsing the response as JSON
-            const responseText = await response.text();  // Get response as plain text first
-            try {
-                const data = JSON.parse(responseText);  // Try to parse it as JSON
-                if (data.response) {
-                    // Remove the "thinking..." message with effect
-                    handleThinkingMessageDisappearance(thinkingMessageElement);
-
-                    // Display actual response
-                    displayMessage(data.response, 'bot');
-                } else {
-                    console.error('Response does not contain "response" field');
-                }
-            } catch (jsonError) {
-                console.error('Error parsing response as JSON:', jsonError);
-                console.log('Non-JSON response:', responseText);  // Log the raw response
-                // Handle the non-JSON response accordingly, e.g., display the raw message
-                displayMessage(responseText, 'bot');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
+        // Remove "thinking" message after 1 second
+        handleThinkingMessageDisappearance(thinkingMessageElement);
     }
 
-    // Add event listener for the send button
-    sendButton.addEventListener('click', sendMessage);
-
-    // Add event listener for the Enter key
-    userMessageInput.addEventListener('keypress', function(event) {
+    // Handle Enter key to send message
+    userMessageInput.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
-            event.preventDefault();  // Prevent form submission if in a form
+            event.preventDefault();
             sendMessage();
         }
+    });
+
+    // Attach event listener to the send button
+    sendButton.addEventListener('click', () => {
+        sendMessage();
     });
 })();
