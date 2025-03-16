@@ -50,7 +50,7 @@
         /* Chatbot container with solid border */
         #chatbot-container {
             position: fixed;
-            bottom: 100px;
+            bottom: 70px;
             right: 20px;
             width: 380px;
             min-height: 50vh;
