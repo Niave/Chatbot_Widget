@@ -2,7 +2,7 @@
     // Create the floating button for the chatbot
     const chatbotButton = document.createElement('div');
     chatbotButton.id = 'chatbot-button';
-    chatbotButton.innerHTML = '🗨️';
+    chatbotButton.innerHTML = '🤖';
 
     // Apply styles to the button
     chatbotButton.style.position = 'fixed';
@@ -91,6 +91,22 @@
             max-height: calc(100% -80px);
             min-height: 450px;
             background-color: #f9f9f9;
+        }
+
+        #chat-messages .thinking-message {
+            padding: 8px 12px;          /* Keep padding similar to user messages for consistency */
+            border-radius: 15px;
+            margin-bottom: 8px;
+            max-width: 80%;              /* Keep it to 80% width to match typical user message width */
+            clear: both;
+            word-wrap: break-word;
+            white-space: nowrap;        
+            overflow: hidden;           
+            width: 20px;                
+            height: 25px;               
+            line-height: 25px;          
+            font-size: 20px;            
+            text-overflow: ellipsis;    
         }
 
         /* Message styling */
@@ -223,6 +239,8 @@
     userMessageInput.id = 'user-message';
     userMessageInput.type = 'text';
     userMessageInput.placeholder = 'Type a message...';
+    userMessageInput.autocomplete = 'off';
+
     inputBox.appendChild(userMessageInput);
 
     const sendButton = document.createElement('button');
@@ -263,149 +281,24 @@
             chatbotContainer.style.display = 'none';
         }
     });
-
-    // Function to display messages
-    function displayMessage(message, sender, isFirstMessage = false) {
-        const messageElement = document.createElement('div');
-        messageElement.className = 'message ' + sender;
-
-        if (isFirstMessage) {
-            messageElement.innerHTML = `<strong>${message}</strong>`;
-        } else {
-            messageElement.innerHTML = message;
-        }
-
-        chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-        if (chatMessages.scrollHeight > chatMessages.offsetHeight) {
-            chatMessages.style.overflowY = 'scroll';
-        }
-    }
-
-    // Function to handle the thinking message disappearing
-    function handleThinkingMessageDisappearance(thinkingMessageElement) {
-        thinkingMessageElement.style.opacity = '0';
-        thinkingMessageElement.style.transition = 'opacity 1s ease-out';
-        setTimeout(() => {
-            thinkingMessageElement.remove();
-        }, 1000);
-    }
-
-    // Handle send button click
-    function sendMessage() {
+     // Handle send button click
+     function sendMessage() {
         const userMessage = userMessageInput.value.trim();
         if (userMessage) {
-            displayMessage(userMessage, 'user');
-            userMessageInput.value = '';
+            displayMessage(userMessage, 'user');  // Display user's message
+            userMessageInput.value = ''; // Clear input
+            // Call sendMessageToMake and remove "thinking..." message after response
 
-            const thinkingMessage = displayMessage("⏳ Thinking...", 'bot', true);
-            sendMessageToMake(userMessage, thinkingMessage);
+
+            sendMessageToMake(userMessage);
         }
     }
 
-    // Send message to external service
-    async function sendMessageToMake(message, thinkingMessageElement) {
-        // Remove "thinking" message after 1 second
-        handleThinkingMessageDisappearance(thinkingMessageElement);
-    }
-
-    // Handle Enter key to send message
-    userMessageInput.addEventListener('keypress', (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            sendMessage();
-        }
-    });
-
-    // Attach event listener to the send button
-    sendButton.addEventListener('click', () => {
-        sendMessage();
-    });
-    // Function to handle the thinking message disappearing
-function handleThinkingMessageDisappearance(thinkingMessageElement) {
-    thinkingMessageElement.style.opacity = '0';
-    thinkingMessageElement.style.transition = 'opacity 1s ease-out';
-    setTimeout(() => {
-        thinkingMessageElement.remove(); // Remove it after the fade-out effect
-    }, 1000); // Duration of the fade-out effect
-}
-
-// Handle send button click
-function sendMessage() {
-    const userMessage = userMessageInput.value.trim();
-    if (userMessage) {
-        displayMessage(userMessage, 'user');  // Display user's message
-        userMessageInput.value = ''; // Clear input
-
-        // Display "thinking..." message from bot
-        const thinkingMessage = displayMessage("⏳ Thinking...", 'bot', true);
-
-        // Send the message and handle the response after the "thinking..." message disappears
-        sendMessageToMake(userMessage, thinkingMessage);
-    }
-}
-
-// Send message to external service (Make webhook)
-async function sendMessageToMake(message, thinkingMessageElement) {
-    const webhookURL = 'https://hook.eu2.make.com/o7saj7j0sr2xt4ny3aofuvbfw2q5fevv';  // Replace with actual webhook
-    
-    try {
-        // Prepare the request payload
-        const payload = JSON.stringify({
-            userMessage: message
-        });
-
-        // Send the message to the external service via POST request
-        const response = await fetch(webhookURL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: payload
-        });
-
-        const responseText = await response.text();  // Get the response text
-
-        try {
-            // Try to parse it as JSON
-            const data = JSON.parse(responseText);
-
-            if (data.response) {
-                // Remove the "thinking..." message with fade-out effect
-                handleThinkingMessageDisappearance(thinkingMessageElement);
-
-                // Display the actual response from the bot
-                displayMessage(data.response, 'bot');
-            } else {
-                console.error('Response does not contain "response" field');
-                handleThinkingMessageDisappearance(thinkingMessageElement);  // Remove thinking message
-                displayMessage("Sorry, I couldn't understand that.", 'bot');  // Fallback message
-            }
-        } catch (error) {
-            console.error('Error parsing response:', error);
-            handleThinkingMessageDisappearance(thinkingMessageElement);  // Remove thinking message
-            displayMessage("Sorry, there was an error with the response.", 'bot');  // Error fallback message
-        }
-
-    } catch (error) {
-        console.error('Error sending message:', error);
-        handleThinkingMessageDisappearance(thinkingMessageElement);  // Remove thinking message
-        displayMessage("Sorry, there was an issue sending your message.", 'bot');  // Error fallback message
-    }
-}
-
-    // Function to display messages
-    function displayMessage(message, sender, isFirstMessage = false) {
+      // Function to display messages
+      function displayMessage(message, sender) {
         const messageElement = document.createElement('div');
         messageElement.className = 'message ' + sender;
-        
-        // If it's the first bot message, remove the "Bot:" text
-        if (isFirstMessage) {
-            messageElement.innerHTML = `<strong>${message}</strong>`;
-        } else {
-            messageElement.innerHTML = message;
-        }
+        messageElement.innerHTML = message;
         
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight; // Automatically scroll to the latest message
@@ -416,35 +309,30 @@ async function sendMessageToMake(message, thinkingMessageElement) {
         }
     }
 
-    // Function to handle the thinking message disappearing
-    function handleThinkingMessageDisappearance(thinkingMessageElement) {
-        thinkingMessageElement.style.opacity = '0';
-        thinkingMessageElement.style.transition = 'opacity 1s ease-out';
-        setTimeout(() => {
-            thinkingMessageElement.remove(); // Remove it after the fade-out effect
-        }, 1000); // Duration of the fade-out effect
-    }
-
-    // Handle send button click
-    function sendMessage() {
-        const userMessage = userMessageInput.value.trim();
-        if (userMessage) {
-            displayMessage(userMessage, 'user');  // Display user's message
-            userMessageInput.value = ''; // Clear input
-
-            // Display "thinking..." message from bot
-            const thinkingMessage = displayMessage("⏳ Thinking...", 'bot', true);
-
-            // Call sendMessageToMake and remove "thinking..." message after response
-            sendMessageToMake(userMessage, thinkingMessage);
-        }
-    }
-
     // Send message to external service
-    async function sendMessageToMake(message, thinkingMessageElement) {
+    async function sendMessageToMake(message) {
         const webhookURL = 'https://hook.eu2.make.com/o7saj7j0sr2xt4ny3aofuvbfw2q5fevv';  // Replace with actual webhook
-
+    
         try {
+            // Create a new message container for "Thinking..."
+            const thinkingMessage = document.createElement('div');
+            thinkingMessage.className = 'message bot thinking-message';
+            thinkingMessage.innerHTML = "...";
+    
+            chatMessages.appendChild(thinkingMessage);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the latest message
+    
+            // Start typing animation using TypewriterJS library
+            const typewriter = new Typewriter(thinkingMessage, {
+                loop: true,
+                delay: 150, 
+                cursor: ''
+            });
+    
+            typewriter.typeString("...")
+                .start();
+    
+            // Fetch the response from the webhook
             const response = await fetch(webhookURL, {
                 method: 'POST',
                 headers: {
@@ -452,37 +340,44 @@ async function sendMessageToMake(message, thinkingMessageElement) {
                 },
                 body: JSON.stringify({ user_message: message })
             });
-
+    
             // Check if the response is ok (status 2xx)
             if (!response.ok) {
                 console.error(`Error: HTTP status ${response.status}`);
                 return;
             }
-
-            // Try parsing the response as JSON
+    
             const responseText = await response.text();  // Get response as plain text first
+    
             try {
                 const data = JSON.parse(responseText);  // Try to parse it as JSON
                 if (data.response) {
-                    // Remove the "thinking..." message with effect
-                    handleThinkingMessageDisappearance(thinkingMessageElement);
-
-                    // Display actual response
-                    displayMessage(data.response, 'bot');
+                    setTimeout(() => {
+                        thinkingMessage.remove();
+                        // Display the bot's response
+                        displayMessage(data.response, 'bot')
+                    }, 500);  // Wait for 2 seconds before displaying the responsense
+                    
                 } else {
                     console.error('Response does not contain "response" field');
                 }
             } catch (jsonError) {
                 console.error('Error parsing response as JSON:', jsonError);
-                console.log('Non-JSON response:', responseText);  // Log the raw response
                 // Handle the non-JSON response accordingly, e.g., display the raw message
-                displayMessage(responseText, 'bot');
+                setTimeout(() => {
+                    thinkingMessage.remove();
+                    displayMessage(responseText, 'bot');
+                }, 500);  // Wait for 2 seconds before displaying the raw message
             }
         } catch (error) {
             console.error('Error:', error);
+            // In case of error, remove the "Thinking..." message and show a default error message
+            thinkingMessage.remove();
+            displayMessage("Sorry, there was an error processing your request.", 'bot');
         }
     }
-
+    
+    
     // Add event listener for the send button
     sendButton.addEventListener('click', sendMessage);
 
