@@ -2,7 +2,7 @@
     // Create the floating button for the chatbot
     const chatbotButton = document.createElement('div');
     chatbotButton.id = 'chatbot-button';
-    chatbotButton.innerHTML = '🗨️';
+    chatbotButton.innerHTML = '🤖';
 
     // Apply styles to the button
     chatbotButton.style.position = 'fixed';
@@ -223,6 +223,8 @@
     userMessageInput.id = 'user-message';
     userMessageInput.type = 'text';
     userMessageInput.placeholder = 'Type a message...';
+    userMessageInput.autocomplete = 'off';
+
     inputBox.appendChild(userMessageInput);
 
     const sendButton = document.createElement('button');
