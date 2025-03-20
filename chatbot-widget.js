@@ -26,16 +26,17 @@
 
     // Hover effect for the button
     chatbotButton.addEventListener('mouseover', () => {
-        chatbotButton.style.backgroundColor = '#0056b3'; // Darker blue on hover
+        chatbotButton.style.backgroundColor = '#8C3708'; // darker copper
     });
 
     chatbotButton.addEventListener('mouseout', () => {
-        chatbotButton.style.backgroundColor = '#007BFF'; // Original blue color
+        chatbotButton.style.backgroundColor = '#A0430A'; // Original copper color
     });
 
     // Append the button to the document body directly
     document.body.appendChild(chatbotButton);
-
+    
+    
     // Create a container for the shadow DOM and attach a shadow root
     const shadowHost = document.createElement('div');
     document.body.appendChild(shadowHost);
@@ -62,13 +63,13 @@
             background: white;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             font-family: 'Arial', sans-serif;
-            border: 2px solid #007BFF;
+            border: 2px solid #A0430A;
 
         }
 
         /* Navbar styling */
         #chatbot-navbar {
-            background-color: #0056b3;
+            background-color: #8C3708;
             padding: 10px;
             color: white;
             font-size: 18px;
@@ -121,7 +122,7 @@
 
         /* User message */
         #chat-messages .user {
-            background-color: #007BFF;
+            background-color: #A0430A;
             color: white;
             float: right;
             margin-left: 30px;
@@ -156,7 +157,7 @@
         #chatbot-container .input-box button {
             padding: 10px;
             margin-left: 10px;
-            background-color: #007BFF;
+            background-color: #A0430A;
             color: white;
             border: none;
             border-radius: 5px;
@@ -164,7 +165,52 @@
         }
 
         #chatbot-container .input-box button:hover {
-            background-color: #0056b3;
+            background-color: #8C3708;
+        }
+        
+        /* Responsive Design for Mobile */
+        @media (max-width: 767px) {
+            /* Chatbot button: smaller button */
+            #chatbot-button {
+                bottom: 10px;
+                right: 10px;
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+
+            /* Chatbot container: smaller width */
+            #chatbot-container {
+                width: 100%;
+                max-width: 350px;
+                bottom: 80px;
+                right: 10px;
+            }
+
+            /* Chat messages container */
+            #chat-messages {
+                max-height: 60vh;
+                min-height: 200px;
+            }
+
+            /* Input box */
+            #chatbot-container .input-box {
+                padding: 8px;
+            }
+
+            #chatbot-container .input-box input {
+                font-size: 14px;
+            }
+
+            #chatbot-container .input-box button {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            /* Navbar: Reduce font size */
+            #chatbot-navbar {
+                font-size: 16px;
+            }
         }
     `;
     shadowRoot.appendChild(style);
@@ -179,7 +225,7 @@
     navbar.id = 'chatbot-navbar';
 
     const logo = document.createElement('img');
-    logo.src = 'https://firebasestorage.googleapis.com/v0/b/voiceglow-cdn/o/public%2F90l23re6_.png?alt=media'; // Replace with your logo
+    logo.src = 'images/Mustafa.png'; // Replace with your logo
     navbar.appendChild(logo);
 
     const title = document.createElement('span');
@@ -200,7 +246,7 @@
 
     // Create logo for the info container
     const infoLogo = document.createElement('img');
-    infoLogo.src = 'https://firebasestorage.googleapis.com/v0/b/voiceglow-cdn/o/public%2F90l23re6_.png?alt=media';
+    infoLogo.src = 'images/Mustafa.png';
     infoLogo.id = 'info-logo';
     infoContainer.appendChild(infoLogo);
 
@@ -356,7 +402,7 @@
                         thinkingMessage.remove();
                         // Display the bot's response
                         displayMessage(data.response, 'bot')
-                    }, 500);  // Wait for 2 seconds before displaying the responsense
+                    }, 350);  // Wait for 2 seconds before displaying the responsense
                     
                 } else {
                     console.error('Response does not contain "response" field');
@@ -367,7 +413,7 @@
                 setTimeout(() => {
                     thinkingMessage.remove();
                     displayMessage(responseText, 'bot');
-                }, 500);  // Wait for 2 seconds before displaying the raw message
+                }, 350);  // Wait for 2 seconds before displaying the raw message
             }
         } catch (error) {
             console.error('Error:', error);
