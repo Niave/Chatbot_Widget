@@ -225,7 +225,7 @@
     navbar.id = 'chatbot-navbar';
 
     const logo = document.createElement('img');
-    logo.src = 'images/Mustafa.png'; // Replace with your logo
+    logo.src = 'Images/Mustafa.png'; // Replace with your logo
     navbar.appendChild(logo);
 
     const title = document.createElement('span');
@@ -246,7 +246,7 @@
 
     // Create logo for the info container
     const infoLogo = document.createElement('img');
-    infoLogo.src = 'images/Mustafa.png';
+    infoLogo.src = 'Images/Mustafa.png';
     infoLogo.id = 'info-logo';
     infoContainer.appendChild(infoLogo);
 
