@@ -226,7 +226,7 @@
         right: 0px;
         width: 100%;
         max-width: 350px;
-        max-height: calc(var(--vh, 1vh) * 100);
+        max-height: calc(var(--vh, 1vh) * 80);
         background-color: white;
         overflow-y: auto;
         transition: all 0.3s ease; /* Smooth transition */
