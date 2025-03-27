@@ -43,7 +43,7 @@
     document.body.appendChild(shadowHost);
 
     window.addEventListener('resize', () => {
-        const vh = window.innerHeight * 0.01;  // 1% of the viewport height
+        const vh = window.innerHeight * 0.007;  // 1% of the viewport height
         document.documentElement.style.setProperty('--vh', `${vh}px`);
     });
     
