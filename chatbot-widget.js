@@ -42,6 +42,12 @@
     const shadowHost = document.createElement('div');
     document.body.appendChild(shadowHost);
 
+    window.addEventListener('resize', () => {
+        const vh = window.innerHeight * 0.01;  // 1% of the viewport height
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    });
+    
+
     const shadowRoot = shadowHost.attachShadow({
         mode: 'open'
     });
@@ -198,47 +204,72 @@
 
 /* Responsive Design for Mobile */
 @media (max-width: 767px) {
+    /* Chatbot button at the bottom */
     #chatbot-button {
-        bottom: 0px;
-        right: 0px;
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
+        bottom: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        border-radius: 50%;
+        background-color: #8C3708;
+        color: white;
+        text-align: center;
+        position: fixed;
+        z-index: 9999; /* Ensure it's always on top */
     }
 
+    /* Chatbot container */
     #chatbot-container {
-        width: 100%;
-        max-width: 350px;
+        position: fixed;
         bottom: 0px;
         right: 0px;
-        max-height: calc(100vh - 140px);
+        width: 100%;
+        max-width: 350px;
+        max-height: calc(var(--vh, 1vh) * 100);
+        background-color: white;
+        overflow-y: auto;
+        transition: all 0.3s ease; /* Smooth transition */
+    }
+
+    /* Chat messages container */
+    #chat-messages {
+        padding: 10px;
+        max-height: calc(100vh - 200px); /* Adjust to avoid being pushed offscreen */
         overflow-y: auto;
     }
 
-    #chat-messages {
-        max-height: calc(100% - 140px);
-        min-height: 150px;
-    }
-
+    /* Input box styling */
     #chatbot-container .input-box {
         padding: 8px;
+        background-color: #f1f1f1;
     }
 
     #chatbot-container .input-box input {
         font-size: 14px;
+        width: 85%; /* Ensure the input is not too wide */
+        padding: 8px;
+        border-radius: 5px;
     }
 
     #chatbot-container .input-box button {
         font-size: 14px;
         padding: 8px;
+        border-radius: 5px;
+        background-color: #8C3708;
+        color: white;
     }
 
+    /* Navbar styling */
     #chatbot-navbar {
         font-size: 16px;
         padding: 8px;
         position: relative;
+        background-color: #8C3708;
+        color: white;
     }
 }
+
 
     `;
     shadowRoot.appendChild(style);
