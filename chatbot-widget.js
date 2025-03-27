@@ -215,7 +215,7 @@
         background-color: #8C3708;
         color: white;
         text-align: center;
-        position: fixed;
+        position: sticky;
         z-index: 9999; /* Ensure it's always on top */
     }
 
