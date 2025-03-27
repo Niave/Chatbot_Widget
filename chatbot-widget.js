@@ -2,25 +2,26 @@
     // Create the floating button for the chatbot
     const chatbotButton = document.createElement('div');
     chatbotButton.id = 'chatbot-button';
-    chatbotButton.innerHTML = '🤖';
+    chatbotButton.innerHTML = '💬';
 
     // Apply styles to the button
+   
     chatbotButton.style.position = 'fixed';
-    chatbotButton.style.bottom = '20px'; // Place at the bottom
-    chatbotButton.style.right = '20px'; // Place at the right
-    chatbotButton.style.width = '40px'; // Set size
-    chatbotButton.style.height = '40px'; // Set size
-    chatbotButton.style.backgroundColor = '#007BFF'; // Blue background color
-    chatbotButton.style.color = 'white'; // White icon color
-    chatbotButton.style.borderRadius = '50%'; // Rounded button
-    chatbotButton.style.display = 'flex'; // Use flexbox to center the icon
-    chatbotButton.style.justifyContent = 'center'; // Center content horizontally
-    chatbotButton.style.alignItems = 'center'; // Center content vertically
-    chatbotButton.style.fontSize = '20px'; // Increase the size of the icon
-    chatbotButton.style.cursor = 'pointer'; // Make it clickable
-    chatbotButton.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)'; // Shadow for depth
-    chatbotButton.style.transition = 'background-color 0.3s ease'; // Smooth hover transition
+    chatbotButton.style.bottom = '20px';
+    chatbotButton.style.right = '20px';
+    chatbotButton.style.width = '50px';  // Adjust width to fit the symbol
+    chatbotButton.style.height = '50px'; // Adjust height to fit the symbol
+    chatbotButton.style.backgroundColor = '#A0430A';
+    chatbotButton.style.color = 'white';
+    chatbotButton.style.borderRadius = '50%';
+    chatbotButton.style.display = 'flex';
+    chatbotButton.style.justifyContent = 'center';
+    chatbotButton.style.alignItems = 'center';
+    chatbotButton.style.fontSize = '24px'; // Ensure the font size is large enough for the symbol
+    chatbotButton.style.cursor = 'pointer';
+    chatbotButton.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
 
+    
     // Prevent text selection on the button
     chatbotButton.style.userSelect = 'none'; // Disable text selection
 
@@ -48,170 +49,194 @@
     // Inject the CSS styles into the shadow DOM
     const style = document.createElement('style');
     style.textContent = `
-        /* Chatbot container with solid border */
-        #chatbot-container {
-            position: fixed;
-            bottom: 70px;
-            right: 20px;
-            width: 380px;
-            min-height: 50vh;
-            max-height: 90vh;
-            display: none;
-            z-index: 9999;
-            border-radius: 10px;
-            overflow: hidden;
-            background: white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            font-family: 'Arial', sans-serif;
-            border: 2px solid #A0430A;
+/* Chatbot container with solid border */
+#chatbot-container {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    width: 380px;
+    min-height: 50vh;
+    max-height: 90vh;
+    display: none;
+    z-index: 9999;
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    border: 2px solid #ccc;
+}
 
-        }
+/* Chatbot button */
+#chatbot-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #A0430A;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+    user-select: none;
+}
 
-        /* Navbar styling */
-        #chatbot-navbar {
-            background-color: #8C3708;
-            padding: 10px;
-            color: white;
-            font-size: 18px;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
+#chatbot-button:hover {
+    background-color: #8C3708;
+}
 
-        #chatbot-navbar img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
+/* Navbar styling */
+#chatbot-navbar {
+    background-color: #8C3708;
+    padding: 10px;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
 
-        /* Chat messages container */
-        #chat-messages {
-            padding: 10px;
-            overflow-y: auto;
-            max-height: calc(100% -80px);
-            min-height: 450px;
-            background-color: #f9f9f9;
-        }
+#chatbot-navbar img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
 
-        #chat-messages .thinking-message {
-            padding: 8px 12px;          /* Keep padding similar to user messages for consistency */
-            border-radius: 15px;
-            margin-bottom: 8px;
-            max-width: 80%;              /* Keep it to 80% width to match typical user message width */
-            clear: both;
-            word-wrap: break-word;
-            white-space: nowrap;        
-            overflow: hidden;           
-            width: 20px;                
-            height: 25px;               
-            line-height: 25px;          
-            font-size: 20px;            
-            text-overflow: ellipsis;    
-        }
+/* Chat messages container */
+#chat-messages {
+    padding: 15px;  /* Increased padding for a cleaner look */
+    overflow-y: auto;
+    max-height: calc(100% - 80px);
+    min-height: 450px;
+    background-color: #f9f9f9;
+    font-size: 16px; /* Adjusted font size */
+    line-height: 1.6; /* Increased line height */
+}
 
-        /* Message styling */
-        #chat-messages .message {
-            padding: 8px 12px;
-            border-radius: 15px;
-            margin-bottom: 8px;
-            max-width: 80%;
-            clear: both;
-            word-wrap: break-word;
-        }
+/* Thinking message styling */
+#chat-messages .thinking-message {
+    padding: 8px 12px;
+    border-radius: 15px;
+    margin-bottom: 8px;
+    max-width: 80%;
+    clear: both;
+    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 20px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 20px;
+    text-overflow: ellipsis;
+}
 
-        /* User message */
-        #chat-messages .user {
-            background-color: #A0430A;
-            color: white;
-            float: right;
-            margin-left: 30px;
-            border-radius: 15px 15px 0px 15px;
-        }
+/* Message styling */
+#chat-messages .message {
+    padding: 10px 15px;  /* Added more padding for better spacing */
+    border-radius: 15px;
+    margin-bottom: 12px;  /* Adjusted bottom margin */
+    max-width: 80%;
+    clear: both;
+    word-wrap: break-word;
+    line-height: 1.5;  /* Improved line-height for messages */
+}
 
-        /* Bot message */
-        #chat-messages .bot {
-            background-color: #e0e0e0;
-            color: black;
-            float: left;
-            margin-right: 30px;
-            border-radius: 15px 15px 15px 0px;
-        }
+/* User message */
+#chat-messages .user {
+    background-color: #A0430A;
+    color: white;
+    float: right;
+    margin-left: 30px;
+    border-radius: 15px 15px 0px 15px;
+}
 
-        /* Input box */
-        #chatbot-container .input-box {
-            display: flex;
-            padding: 10px;
-            border-top: 1px solid #ccc;
-            background-color: #f9f9f9;
-        }
+/* Bot message */
+#chat-messages .bot {
+    background-color: #e0e0e0;
+    color: black;
+    float: left;
+    margin-right: 30px;
+    border-radius: 15px 15px 15px 0px;
+}
 
-        #chatbot-container .input-box input {
-            flex-grow: 1;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-        }
+/* Input box */
+#chatbot-container .input-box {
+    display: flex;
+    padding: 12px; /* Increased padding for better UI */
+    border-top: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
 
-        #chatbot-container .input-box button {
-            padding: 10px;
-            margin-left: 10px;
-            background-color: #A0430A;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+#chatbot-container .input-box input {
+    flex-grow: 1;
+    padding: 12px;  /* Added more padding */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
 
-        #chatbot-container .input-box button:hover {
-            background-color: #8C3708;
-        }
-        
-        /* Responsive Design for Mobile */
-        @media (max-width: 767px) {
-            /* Chatbot button: smaller button */
-            #chatbot-button {
-                bottom: 10px;
-                right: 10px;
-                width: 35px;
-                height: 35px;
-                font-size: 18px;
-            }
+#chatbot-container .input-box button {
+    padding: 12px;  /* Adjusted padding */
+    margin-left: 10px;
+    background-color: #A0430A;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-            /* Chatbot container: smaller width */
-            #chatbot-container {
-                width: 100%;
-                max-width: 350px;
-                bottom: 80px;
-                right: 10px;
-            }
+#chatbot-container .input-box button:hover {
+    background-color: #8C3708;
+}
 
-            /* Chat messages container */
-            #chat-messages {
-                max-height: 60vh;
-                min-height: 200px;
-            }
+/* Responsive Design for Mobile */
+@media (max-width: 767px) {
+    #chatbot-button {
+        bottom: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
 
-            /* Input box */
-            #chatbot-container .input-box {
-                padding: 8px;
-            }
+    #chatbot-container {
+        width: 100%;
+        max-width: 350px;
+        bottom: 80px;
+        right: 10px;
+        max-height: 80vh;
+    }
 
-            #chatbot-container .input-box input {
-                font-size: 14px;
-            }
+    #chat-messages {
+        max-height: calc(100% - 140px);
+        min-height: 200px;
+    }
 
-            #chatbot-container .input-box button {
-                font-size: 14px;
-                padding: 8px;
-            }
+    #chatbot-container .input-box {
+        padding: 8px;
+    }
 
-            /* Navbar: Reduce font size */
-            #chatbot-navbar {
-                font-size: 16px;
-            }
-        }
+    #chatbot-container .input-box input {
+        font-size: 14px;
+    }
+
+    #chatbot-container .input-box button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    #chatbot-navbar {
+        font-size: 16px;
+    }
+}
+
     `;
     shadowRoot.appendChild(style);
 
@@ -232,7 +257,54 @@
     title.textContent = 'Mustafa - AI Assistent';
     navbar.appendChild(title);
 
+
+  
+    // Minimize Button
+    const minimizeButton = document.createElement('button');
+    minimizeButton.innerHTML = '&minus;';  // Minimize button with '-' symbol
+    minimizeButton.style.fontSize = '20px';
+    minimizeButton.style.cursor = 'pointer';
+    minimizeButton.style.background = 'transparent';
+    minimizeButton.style.border = 'none';
+    minimizeButton.style.color = '#fff';
+    minimizeButton.style.marginLeft = 'auto'; // Align to the right of navbar
+    navbar.appendChild(minimizeButton);
+      // Exit Button
+    const exitButton = document.createElement('button');
+    exitButton.innerHTML = '&times;';  // Exit button with '×' symbol
+    exitButton.style.fontSize = '20px';
+    exitButton.style.cursor = 'pointer';
+    exitButton.style.background = 'transparent';
+    exitButton.style.border = 'none';
+    exitButton.style.color = '#fff';
+    navbar.appendChild(exitButton);
+  
+
     chatbotContainer.appendChild(navbar);
+
+    minimizeButton.addEventListener('click', () => {
+        chatbotContainer.style.display = 'none';  // Hide the UI
+        chatbotButton.style.display = 'flex';   // Show the floating button again
+    });
+    
+    // Exit button event: Close the chatbot and reset the chat
+    exitButton.addEventListener('click', () => {
+        // Hide the chatbot and show the floating button again
+        chatbotContainer.style.display = 'none';
+        chatbotButton.style.display = 'flex';  // Show the floating button again
+    
+        // Clear only the chat history, not the entire container
+        Array.from(chatMessages.children).forEach(child => {
+            if (child.classList.contains('message')) {
+                child.remove();  // Remove only dynamic chat messages (user and bot messages)
+            }
+        });
+
+        greetingShown = false;
+    });
+
+    
+
 
     // Create message container
     const chatMessages = document.createElement('div');
@@ -303,30 +375,34 @@
     // Set background color for chatbot container
     chatbotContainer.style.backgroundColor = backgroundColor;
 
+    
     // Toggle chatbot visibility
     chatbotButton.addEventListener('click', () => {
-        if (chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '') {
-            chatbotContainer.style.display = 'block';
-            if (!greetingShown) {
-                // Display formatted greeting message inside the message container
-                displayMessage(` 
-                    <div style="display: flex; align-items: center; font-family: 'Roboto', sans-serif; color: #333; line-height: 1.6; font-size: 16px;">
-                        <div>
-                            <p style="margin-bottom: 15px;">Hei!</p>
-                            <p style="margin-bottom: 15px;">Jeg er <strong>Mustafa</strong> sin AI assistent.</p>
-                            <p style="margin-bottom: 15px;">Jeg kan svare på spørsmål om våre sentre, åpningstider, medlemskap og andre relevante spørsmål om oss.</p>
-                            <p style="margin-bottom: 15px;">Du kan alltid kontakte oss direkte på 
-                            <a href="mailto:kundeservice@Mustafa.no" style="color: #1a73e8; text-decoration: none;">kundeservice@Mustafa.no</a>.
-                            </p>
-                            <p style="font-size: 15px; font-weight: bold; color: #333; margin-top: 15px;">Hva kan jeg hjelpe deg med?</p>
-                        </div>
-                </div>`, 'bot');
-                greetingShown = true;
-            }
-        } else {
-            chatbotContainer.style.display = 'none';
+    if (chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '') {
+        chatbotContainer.style.display = 'block';
+        chatbotButton.style.display = 'none';  // Hide the floating button when the UI is open
+        if (!greetingShown) {
+            // Display formatted greeting message inside the message container
+            displayMessage(` 
+                <div style="display: flex; align-items: center; font-family: 'Roboto', sans-serif; color: #333; line-height: 1.6; font-size: 16px;">
+                    <div>
+                        <p style="margin-bottom: 15px;">Hei!</p>
+                        <p style="margin-bottom: 15px;">Jeg er <strong>Mustafa</strong> sin AI assistent.</p>
+                        <p style="margin-bottom: 15px;">Jeg kan svare på spørsmål om våre sentre, åpningstider, medlemskap og andre relevante spørsmål om oss.</p>
+                        <p style="margin-bottom: 15px;">Du kan alltid kontakte oss direkte på 
+                        <a href="mailto:kundeservice@Mustafa.no" style="color: #1a73e8; text-decoration: none;">kundeservice@Mustafa.no</a>.
+                        </p>
+                        <p style="font-size: 15px; font-weight: bold; color: #333; margin-top: 15px;">Hva kan jeg hjelpe deg med?</p>
+                    </div>
+            </div>`, 'bot');
+            greetingShown = true;
         }
-    });
+    } else {
+        chatbotContainer.style.display = 'none';  // Hide the UI when it's already visible
+        chatbotButton.style.display = 'flex';   // Show the floating button again
+    }
+});
+
      // Handle send button click
      function sendMessage() {
         const userMessage = userMessageInput.value.trim();
@@ -402,7 +478,7 @@
                         thinkingMessage.remove();
                         // Display the bot's response
                         displayMessage(data.response, 'bot')
-                    }, 350);  // Wait for 2 seconds before displaying the responsense
+                    }, 2000);  // Wait for 2 seconds before displaying the responsense
                     
                 } else {
                     console.error('Response does not contain "response" field');
@@ -413,7 +489,7 @@
                 setTimeout(() => {
                     thinkingMessage.remove();
                     displayMessage(responseText, 'bot');
-                }, 350);  // Wait for 2 seconds before displaying the raw message
+                }, 2000);  // Wait for 2 seconds before displaying the raw message
             }
         } catch (error) {
             console.error('Error:', error);
