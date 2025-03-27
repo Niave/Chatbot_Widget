@@ -52,7 +52,7 @@
 /* Chatbot container with solid border */
 #chatbot-container {
     position: fixed;
-    bottom: 70px;
+    bottom: 20px;
     right: 20px;
     width: 380px;
     min-height: 50vh;
@@ -199,7 +199,7 @@
 /* Responsive Design for Mobile */
 @media (max-width: 767px) {
     #chatbot-button {
-        bottom: 10px;
+        bottom: 0px;
         right: 10px;
         width: 35px;
         height: 35px;
@@ -209,7 +209,7 @@
     #chatbot-container {
         width: 100%;
         max-width: 350px;
-        bottom: 80px;
+        bottom: 0px;
         right: 10px;
         max-height: 80vh;
     }
