@@ -211,7 +211,8 @@
         max-width: 350px;
         bottom: 0px;
         right: 0px;
-        max-height: 80vh;
+        max-height: calc(100vh - 20px);
+        overflow-y: auto;
     }
 
     #chat-messages {
