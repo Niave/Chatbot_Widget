@@ -211,13 +211,13 @@
         max-width: 350px;
         bottom: 0px;
         right: 0px;
-        max-height: calc(100vh - 100px);
+        max-height: calc(100vh - 140px);
         overflow-y: auto;
     }
 
     #chat-messages {
         max-height: calc(100% - 140px);
-        min-height: 200px;
+        min-height: 150px;
     }
 
     #chatbot-container .input-box {
@@ -235,6 +235,8 @@
 
     #chatbot-navbar {
         font-size: 16px;
+        padding: 8px;
+        position: relative;
     }
 }
 
