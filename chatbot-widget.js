@@ -211,7 +211,7 @@
         max-width: 350px;
         bottom: 0px;
         right: 0px;
-        max-height: calc(100vh - 60px);
+        max-height: calc(100vh - 100px);
         overflow-y: auto;
     }
 
