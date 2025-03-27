@@ -200,7 +200,7 @@
 @media (max-width: 767px) {
     #chatbot-button {
         bottom: 0px;
-        right: 10px;
+        right: 0px;
         width: 35px;
         height: 35px;
         font-size: 18px;
@@ -210,7 +210,7 @@
         width: 100%;
         max-width: 350px;
         bottom: 0px;
-        right: 10px;
+        right: 0px;
         max-height: 80vh;
     }
 
