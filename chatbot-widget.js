@@ -85,9 +85,8 @@ window.initChatbot = function initChatbot(config = {}) {
     bottom: 40px;
     right: 20px;
     width: 380px;
-    min-height: auto;
+    min-height: 40vh;
     max-height: 90vh;
-    height: auto; 
     display: none;
     z-index: 9999;
     border-radius: 10px;
