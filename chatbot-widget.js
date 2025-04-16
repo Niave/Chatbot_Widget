@@ -85,8 +85,9 @@ window.initChatbot = function initChatbot(config = {}) {
     bottom: 40px;
     right: 20px;
     width: 380px;
-    min-height: 50vh;
+    min-height: auto;
     max-height: 90vh;
+    height: auto; 
     display: none;
     z-index: 9999;
     border-radius: 10px;
@@ -95,6 +96,7 @@ window.initChatbot = function initChatbot(config = {}) {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', sans-serif;
     border: 2px solid #ccc;
+    color: #333
 }
 
 /* Chatbot button */
@@ -399,6 +401,8 @@ window.initChatbot = function initChatbot(config = {}) {
     // Style the text inside the infoContainer
     infoMessage.style.fontWeight = 'bold';
     infoMessage.style.marginTop = '10px';
+    infoMessage.style.color = '#333';
+    infoMessage.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif';
 
     // Set height, max-height, and overflow for chat messages to ensure scrollability
     //chatMessages.style.minHeight = '200px';
@@ -471,14 +475,23 @@ window.initChatbot = function initChatbot(config = {}) {
         messageElement.innerHTML = message;
         
         chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Automatically scroll to the latest message
-
-        // Check if the messages overflow beyond max height
-        if (chatMessages.scrollHeight > chatMessages.offsetHeight) {
-            chatMessages.style.overflowY = 'scroll'; // Show scroll when overflow occurs
+    
+        // Only check scroll behavior after the first message
+        if (greetingShown) {
+            // Ensure that the container fits the content until it overflows
+            chatMessages.style.overflowY = 'auto'; // Enable scroll if necessary
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the latest message
+        } else {
+            // On first greeting, make sure overflow is hidden
+            chatMessages.style.overflowY = 'hidden';
+        }
+        
+        // Check if the content has grown beyond the container height
+        if (chatMessages.scrollHeight > chatMessages.clientHeight) {
+            chatMessages.style.overflowY = 'auto'; // Enable scroll if overflow occurs
         }
     }
-
+    
     // Send message to external service
     async function sendMessageToMake(message) {
     
