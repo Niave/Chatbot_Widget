@@ -1,4 +1,28 @@
-(function () {
+
+window.initChatbot = function initChatbot(config = {}) {
+
+    const {
+        botName = config.botName || 'X',
+        assistantTitle = config.assistantTitle || 'AI Assistent - X',
+        greetingHTML = config.greetingHTML || `
+        <div style="display: flex; align-items: center; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', sans-serif; color: #333; line-height: 1.6; font-size: 16px;">
+         <div>
+           <p style="margin-bottom: 15px;">Hei og velkommen!</p>
+           <p style="margin-bottom: 15px;">Jeg er en AI-assistent fra <strong>Mustafa Chatbots</strong>.</p>
+           <p style="margin-bottom: 15px;">Vi lager skreddersydde chatbots som hjelper bedrifter med kundeservice og salg – døgnet rundt.</p>
+           <p style="margin-bottom: 15px;">Ta gjerne kontakt på 
+             <a href="mailto:kundeservice@Mustafa.no" style="color: #1a73e8; text-decoration: none;">kundeservice@Mustafa.no</a> hvis du vil vite mer.
+           </p>
+           <p style="font-size: 15px; font-weight: bold; color: #333; margin-top: 15px;">Hva vil du teste i dag?</p>
+         </div>
+        </div>`,
+        webhookURL = config.webhookURL || 'https://hook.eu2.make.com/o7saj7j0sr2xt4ny3aofuvbfw2q5fevv',
+        logoSrc = config.logoSrc || 'Images/Mustafa.png',
+        buttonColor = config.buttonColor || '#A0430A',
+        buttonHoverColor = config.buttonHoverColor || '#8C3708',
+        customBackgroundColor = config.customBackgroundColor || '#f9f9f9'
+    } = config;
+
     // Create the floating button for the chatbot
     const chatbotButton = document.createElement('div');
     chatbotButton.id = 'chatbot-button';
@@ -11,7 +35,7 @@
     chatbotButton.style.right = '20px';
     chatbotButton.style.width = '50px';  // Adjust width to fit the symbol
     chatbotButton.style.height = '50px'; // Adjust height to fit the symbol
-    chatbotButton.style.backgroundColor = '#A0430A';
+    chatbotButton.style.backgroundColor = buttonColor;
     chatbotButton.style.color = 'white';
     chatbotButton.style.borderRadius = '50%';
     chatbotButton.style.display = 'flex';
@@ -27,11 +51,11 @@
 
     // Hover effect for the button
     chatbotButton.addEventListener('mouseover', () => {
-        chatbotButton.style.backgroundColor = '#8C3708'; // darker copper
+        chatbotButton.style.backgroundColor = buttonHoverColor; // darker copper
     });
 
     chatbotButton.addEventListener('mouseout', () => {
-        chatbotButton.style.backgroundColor = '#A0430A'; // Original copper color
+        chatbotButton.style.backgroundColor = buttonColor; // Original copper color
     });
 
     // Append the button to the document body directly
@@ -69,7 +93,7 @@
     overflow: hidden;
     background: white;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    font-family: 'Roboto', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', sans-serif;
     border: 2px solid #ccc;
 }
 
@@ -80,7 +104,7 @@
     right: 20px;
     width: 50px;
     height: 50px;
-    background-color: #A0430A;
+    background-color: ${buttonColor};
     color: white;
     border-radius: 50%;
     display: flex;
@@ -94,12 +118,12 @@
 }
 
 #chatbot-button:hover {
-    background-color: #8C3708;
+    background-color: ${buttonHoverColor};
 }
 
 /* Navbar styling */
 #chatbot-navbar {
-    background-color: #8C3708;
+    background-color: ${buttonHoverColor};
     padding: 10px;
     color: white;
     font-size: 18px;
@@ -123,7 +147,7 @@
     min-height: 450px;
     background-color: #f9f9f9;
     font-size: 16px; /* Adjusted font size */
-    line-height: 1.6; /* Increased line height */
+    line-height: 1.5; /* Increased line height */
 }
 
 /* Thinking message styling */
@@ -156,7 +180,7 @@
 
 /* User message */
 #chat-messages .user {
-    background-color: #A0430A;
+    background-color: ${buttonColor};
     color: white;
     float: right;
     margin-left: 30px;
@@ -191,7 +215,7 @@
 #chatbot-container .input-box button {
     padding: 12px;  /* Adjusted padding */
     margin-left: 10px;
-    background-color: #A0430A;
+    background-color: ${buttonColor};
     color: white;
     border: none;
     border-radius: 5px;
@@ -199,7 +223,7 @@
 }
 
 #chatbot-container .input-box button:hover {
-    background-color: #8C3708;
+    background-color: ${buttonHoverColor};
 }
 
 /* Responsive Design for Mobile */
@@ -212,7 +236,7 @@
         height: 40px;
         font-size: 20px;
         border-radius: 50%;
-        background-color: #8C3708;
+        background-color: ${buttonHoverColor};
         color: white;
         text-align: center;
         position: sticky;
@@ -256,7 +280,7 @@
         font-size: 14px;
         padding: 8px;
         border-radius: 5px;
-        background-color: #8C3708;
+        background-color: ${buttonHoverColor};
         color: white;
     }
 
@@ -265,7 +289,7 @@
         font-size: 16px;
         padding: 8px;
         position: relative;
-        background-color: #8C3708;
+        background-color: ${buttonHoverColor};
         color: white;
     }
 }
@@ -284,11 +308,11 @@
     navbar.id = 'chatbot-navbar';
 
     const logo = document.createElement('img');
-    logo.src = 'Images/Mustafa.png'; // Replace with your logo
+    logo.src = logoSrc; // Replace with your logo
     navbar.appendChild(logo);
 
     const title = document.createElement('span');
-    title.textContent = 'Mustafa - AI Assistent';
+    title.textContent = botName;
     navbar.appendChild(title);
 
 
@@ -352,13 +376,13 @@
 
     // Create logo for the info container
     const infoLogo = document.createElement('img');
-    infoLogo.src = 'Images/Mustafa.png';
+    infoLogo.src = logoSrc;
     infoLogo.id = 'info-logo';
     infoContainer.appendChild(infoLogo);
 
     // Create the info message inside the container
     const infoMessage = document.createElement('p');
-    infoMessage.textContent = 'Mustafa - AI Assistent';
+    infoMessage.textContent = assistantTitle;
     infoContainer.appendChild(infoMessage);
 
     // Style the infoContainer
@@ -369,7 +393,8 @@
     infoLogo.style.display = 'block';
     infoLogo.style.margin = '0 auto';
     infoLogo.style.width = '50px';
-    infoLogo.style.height = 'auto';
+    infoLogo.style.height = '50px';
+    infoLogo.style.borderRadius = '50%'
 
     // Style the text inside the infoContainer
     infoMessage.style.fontWeight = 'bold';
@@ -404,7 +429,7 @@
     let greetingShown = false;
 
     // Background color for the chatbot container (can be dynamic or static)
-    const backgroundColor = '#f9f9f9'; // Adjust this as needed (light background color)
+    const backgroundColor = customBackgroundColor; // Adjust this as needed (light background color)
 
     // Set background color for chatbot container
     chatbotContainer.style.backgroundColor = backgroundColor;
@@ -417,18 +442,7 @@
         chatbotButton.style.display = 'none';  // Hide the floating button when the UI is open
         if (!greetingShown) {
             // Display formatted greeting message inside the message container
-            displayMessage(` 
-                <div style="display: flex; align-items: center; font-family: 'Roboto', sans-serif; color: #333; line-height: 1.6; font-size: 16px;">
-                    <div>
-                        <p style="margin-bottom: 15px;">Hei!</p>
-                        <p style="margin-bottom: 15px;">Jeg er <strong>Mustafa</strong> sin AI assistent.</p>
-                        <p style="margin-bottom: 15px;">Jeg kan svare på spørsmål om våre sentre, åpningstider, medlemskap og andre relevante spørsmål om oss.</p>
-                        <p style="margin-bottom: 15px;">Du kan alltid kontakte oss direkte på 
-                        <a href="mailto:kundeservice@Mustafa.no" style="color: #1a73e8; text-decoration: none;">kundeservice@Mustafa.no</a>.
-                        </p>
-                        <p style="font-size: 15px; font-weight: bold; color: #333; margin-top: 15px;">Hva kan jeg hjelpe deg med?</p>
-                    </div>
-            </div>`, 'bot');
+            displayMessage(greetingHTML, 'bot');
             greetingShown = true;
         }
     } else {
@@ -467,7 +481,6 @@
 
     // Send message to external service
     async function sendMessageToMake(message) {
-        const webhookURL = 'https://hook.eu2.make.com/o7saj7j0sr2xt4ny3aofuvbfw2q5fevv';  // Replace with actual webhook
     
         try {
             // Create a new message container for "Thinking..."
@@ -544,4 +557,4 @@
             sendMessage();
         }
     });
-})();
+};

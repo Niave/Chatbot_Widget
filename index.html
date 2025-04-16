@@ -7,5 +7,16 @@
 </head>
 <body>
     <script src="chatbot-widget.js"></script>
+    <script>
+        const config = {
+        botName: 'me',  // Set the botName to 'test'
+        logoSrc:'https://thumbs.dreamstime.com/z/chatbot-logo-design-virtual-assistant-bot-symbol-chat-bot-vector-graphics-chatbot-icon-flat-vector-related-icon-web-mobile-317503783.jpg'
+
+        };
+        // Call the chatbot after the page loads
+        window.onload = function () {
+            initChatbot(config);  // Or pass config if needed
+        };
+    </script>
 </body>
 </html>
