@@ -242,6 +242,7 @@ window.initChatbot = function initChatbot(config = {}) {
         text-align: center;
         position: sticky;
         z-index: 9999; /* Ensure it's always on top */
+        
     }
 
     /* Chatbot container */
@@ -250,17 +251,18 @@ window.initChatbot = function initChatbot(config = {}) {
         bottom: 0px;
         right: 0px;
         width: 100%;
+        height:620px;
         max-width: 350px;
-        max-height: calc(var(--vh, 1vh) * 80);
         background-color: white;
         overflow-y: auto;
+        display: flex;
+        flex-direction: column;
         transition: all 0.3s ease; /* Smooth transition */
     }
 
     /* Chat messages container */
     #chat-messages {
         padding: 10px;
-        max-height: calc(100vh - 200px); /* Adjust to avoid being pushed offscreen */
         overflow-y: auto;
     }
 
@@ -268,6 +270,7 @@ window.initChatbot = function initChatbot(config = {}) {
     #chatbot-container .input-box {
         padding: 8px;
         background-color: #f1f1f1;
+        position: relative;
     }
 
     #chatbot-container .input-box input {
@@ -275,6 +278,7 @@ window.initChatbot = function initChatbot(config = {}) {
         width: 85%; /* Ensure the input is not too wide */
         padding: 8px;
         border-radius: 5px;
+
     }
 
     #chatbot-container .input-box button {
@@ -287,11 +291,13 @@ window.initChatbot = function initChatbot(config = {}) {
 
     /* Navbar styling */
     #chatbot-navbar {
+        flex-shrink: 0;
         font-size: 16px;
         padding: 8px;
         position: relative;
         background-color: ${buttonHoverColor};
         color: white;
+        
     }
 }
 
