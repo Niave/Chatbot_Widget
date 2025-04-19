@@ -388,7 +388,7 @@ window.initChatbot = function initChatbot(config = {}) {
     infoContainer.appendChild(infoLogo);
 
     // Create the info message inside the container
-    const infoMessage = document.createElement('p');
+    const infoMessage = document.createElement('div');
     infoMessage.textContent = assistantTitle;
     infoContainer.appendChild(infoMessage);
 
