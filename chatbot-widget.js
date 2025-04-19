@@ -407,7 +407,7 @@ window.initChatbot = function initChatbot(config = {}) {
     infoMessage.style.fontWeight = 'bold';
     infoMessage.style.marginTop = '10px';
     infoMessage.style.color = '#333';
-    infoMessage.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif';
+    infoMessage.style.fontFamily = "-apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', sans-serif";
 
     // Set height, max-height, and overflow for chat messages to ensure scrollability
     //chatMessages.style.minHeight = '200px';
