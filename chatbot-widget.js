@@ -251,7 +251,8 @@ window.initChatbot = function initChatbot(config = {}) {
         bottom: 0px;
         right: 0px;
         width: 100%;
-        height:620px;
+        height:100%;
+        max-height:570px;
         max-width: 350px;
         background-color: white;
         overflow-y: auto;
@@ -264,6 +265,7 @@ window.initChatbot = function initChatbot(config = {}) {
     #chat-messages {
         padding: 10px;
         overflow-y: auto;
+        flex-grow: 1
     }
 
     /* Input box styling */
@@ -271,6 +273,11 @@ window.initChatbot = function initChatbot(config = {}) {
         padding: 8px;
         background-color: #f1f1f1;
         position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;  /* Prevent shrinking */
+        margin-top: auto
     }
 
     #chatbot-container .input-box input {
@@ -388,7 +395,7 @@ window.initChatbot = function initChatbot(config = {}) {
     infoContainer.appendChild(infoLogo);
 
     // Create the info message inside the container
-    const infoMessage = document.createElement('div');
+    const infoMessage = document.createElement('p');
     infoMessage.textContent = assistantTitle;
     infoContainer.appendChild(infoMessage);
 
@@ -406,7 +413,8 @@ window.initChatbot = function initChatbot(config = {}) {
     // Style the text inside the infoContainer
     infoMessage.style.fontWeight = 'bold';
     infoMessage.style.marginTop = '10px';
-    infoMessage.style.color = '#000 !important';
+    infoMessage.style.color = '#333';
+    infoMessage.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif';
 
     // Set height, max-height, and overflow for chat messages to ensure scrollability
     //chatMessages.style.minHeight = '200px';

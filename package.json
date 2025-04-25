@@ -1,0 +1,15 @@
+{
+  "name": "chatbot_widget",
+  "version": "1.0.0",
+  "description": "Chatbot widget to display on websites",
+  "main": "chatbot-widget.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.25.3"
+  }
+}
