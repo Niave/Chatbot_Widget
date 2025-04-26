@@ -21,7 +21,8 @@ window.initChatbot = function initChatbot(config = {}) {
         logoSrc = config.logoSrc || 'Images/Mustafa.png',
         buttonColor = config.buttonColor || '#A0430A',
         buttonHoverColor = config.buttonHoverColor || '#8C3708',
-        customBackgroundColor = config.customBackgroundColor || '#f9f9f9'
+        customBackgroundColor = config.customBackgroundColor || '#f9f9f9',
+        MobileChatHeight = config.MobileChatHeight || '570px'
     } = config;
 
     // Create the floating button for the chatbot
@@ -253,7 +254,7 @@ window.initChatbot = function initChatbot(config = {}) {
         right: 0px;
         width: 100%;
         height:100%;
-        max-height:570px;
+        max-height:${MobileChatHeight};
         max-width: 350px;
         background-color: white;
         overflow-y: auto;
