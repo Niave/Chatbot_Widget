@@ -11,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "esbuild": "^0.25.3"
+  },
+  "dependencies": {
+    "typewriter-effect": "^2.18.0"
   }
 }

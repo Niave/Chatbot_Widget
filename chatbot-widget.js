@@ -1,6 +1,7 @@
 
 window.initChatbot = function initChatbot(config = {}) {
-
+    if (window.chatbotInitialized) return;
+    window.chatbotInitialized = true;
     const {
         botName = config.botName || 'X',
         assistantTitle = config.assistantTitle || 'AI Assistent - X',
@@ -506,26 +507,35 @@ window.initChatbot = function initChatbot(config = {}) {
     
     // Send message to external service
     async function sendMessageToMake(message) {
-    
         try {
             // Create a new message container for "Thinking..."
             const thinkingMessage = document.createElement('div');
             thinkingMessage.className = 'message bot thinking-message';
-            thinkingMessage.innerHTML = "...";
-    
+            thinkingMessage.innerHTML = "";
+        
             chatMessages.appendChild(thinkingMessage);
-            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the latest message
-    
-            // Start typing animation using TypewriterJS library
-            const typewriter = new Typewriter(thinkingMessage, {
-                loop: true,
-                delay: 150, 
-                cursor: ''
-            });
-    
-            typewriter.typeString("...")
-                .start();
-    
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        
+            const states = ['', '.', '..', '...', '....']; // Define the states: ['...', '..', '.', '']
+            let currentStateIndex = 0; // Start at the first state: '...'
+            let direction = 1; // 1 means moving forward, -1 means moving backward
+                
+            const typingInterval = setInterval(() => {
+                thinkingMessage.innerHTML = states[currentStateIndex]; // Update the message with the current state
+            
+                // Update the currentStateIndex based on the direction
+                currentStateIndex += direction;
+            
+                // If we've reached the end of the states array, reverse the direction
+                if (currentStateIndex === states.length) {
+                    direction = -1; // Move backward
+                    currentStateIndex = states.length - 2; // Start moving backwards from the second-to-last state
+                } else if (currentStateIndex < 0) {
+                    direction = 1; // Move forward
+                    currentStateIndex = 1; // Start moving forwards from the second state
+                }
+            }, 150);
+
             // Fetch the response from the webhook
             const response = await fetch(webhookURL, {
                 method: 'POST',
@@ -534,42 +544,48 @@ window.initChatbot = function initChatbot(config = {}) {
                 },
                 body: JSON.stringify({ user_message: message })
             });
-    
-            // Check if the response is ok (status 2xx)
+
             if (!response.ok) {
                 console.error(`Error: HTTP status ${response.status}`);
+                clearInterval(typingInterval);
+                thinkingMessage.remove();
+                displayMessage("Sorry, there was an error fetching the response.", 'bot');
                 return;
             }
-    
-            const responseText = await response.text();  // Get response as plain text first
-    
+
+            const responseText = await response.text();
+
             try {
-                const data = JSON.parse(responseText);  // Try to parse it as JSON
+                const data = JSON.parse(responseText);
                 if (data.response) {
                     setTimeout(() => {
+                        clearInterval(typingInterval);
                         thinkingMessage.remove();
-                        // Display the bot's response
-                        displayMessage(data.response, 'bot')
-                    }, 2000);  // Wait for 2 seconds before displaying the responsense
-                    
+                        displayMessage(data.response, 'bot');
+                    }, 2000);
                 } else {
                     console.error('Response does not contain "response" field');
+                    clearInterval(typingInterval);
+                    thinkingMessage.remove();
+                    displayMessage("Sorry, the response format was unexpected.", 'bot');
                 }
             } catch (jsonError) {
                 console.error('Error parsing response as JSON:', jsonError);
-                // Handle the non-JSON response accordingly, e.g., display the raw message
                 setTimeout(() => {
+                    clearInterval(typingInterval);
                     thinkingMessage.remove();
                     displayMessage(responseText, 'bot');
-                }, 2000);  // Wait for 2 seconds before displaying the raw message
+                }, 2000);
             }
+
         } catch (error) {
             console.error('Error:', error);
-            // In case of error, remove the "Thinking..." message and show a default error message
+            clearInterval(typingInterval);
             thinkingMessage.remove();
             displayMessage("Sorry, there was an error processing your request.", 'bot');
         }
     }
+
     
     
     // Add event listener for the send button

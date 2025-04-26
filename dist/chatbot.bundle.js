@@ -1,4 +1,4 @@
-(()=>{window.initChatbot=function(i={}){let{botName:z=i.botName||"X",assistantTitle:I=i.assistantTitle||"AI Assistent - X",greetingHTML:j=i.greetingHTML||`
+(()=>{window.initChatbot=function(r={}){if(window.chatbotInitialized)return;window.chatbotInitialized=!0;let{botName:N=r.botName||"X",assistantTitle:A=r.assistantTitle||"AI Assistent - X",greetingHTML:B=r.greetingHTML||`
         <div style="display: flex; align-items: center; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', sans-serif; color: #333; line-height: 1.6; font-size: 16px;">
          <div>
            <p style="margin-bottom: 15px;">Hei og velkommen!</p>
@@ -9,7 +9,7 @@
            </p>
            <p style="font-size: 15px; font-weight: bold; color: #333; margin-top: 15px;">Hva vil du teste i dag?</p>
          </div>
-        </div>`,webhookURL:N=i.webhookURL||"https://hook.eu2.make.com/o7saj7j0sr2xt4ny3aofuvbfw2q5fevv",logoSrc:k=i.logoSrc||"Images/Mustafa.png",buttonColor:u=i.buttonColor||"#A0430A",buttonHoverColor:p=i.buttonHoverColor||"#8C3708",customBackgroundColor:A=i.customBackgroundColor||"#f9f9f9"}=i,e=document.createElement("div");e.id="chatbot-button",e.innerHTML="\u{1F4AC}",e.style.position="fixed",e.style.bottom="20px",e.style.right="20px",e.style.width="50px",e.style.height="50px",e.style.backgroundColor=u,e.style.color="white",e.style.borderRadius="50%",e.style.display="flex",e.style.justifyContent="center",e.style.alignItems="center",e.style.fontSize="24px",e.style.cursor="pointer",e.style.boxShadow="0 4px 15px rgba(0, 0, 0, 0.3)",e.style.userSelect="none",e.addEventListener("mouseover",()=>{e.style.backgroundColor=p}),e.addEventListener("mouseout",()=>{e.style.backgroundColor=u}),document.body.appendChild(e);let C=document.createElement("div");document.body.appendChild(C),window.addEventListener("resize",()=>{let o=window.innerHeight*.007;document.documentElement.style.setProperty("--vh",`${o}px`)});let E=C.attachShadow({mode:"open"}),M=document.createElement("style");M.textContent=`
+        </div>`,webhookURL:$=r.webhookURL||"https://hook.eu2.make.com/o7saj7j0sr2xt4ny3aofuvbfw2q5fevv",logoSrc:M=r.logoSrc||"Images/Mustafa.png",buttonColor:x=r.buttonColor||"#A0430A",buttonHoverColor:c=r.buttonHoverColor||"#8C3708",customBackgroundColor:R=r.customBackgroundColor||"#f9f9f9"}=r,e=document.createElement("div");e.id="chatbot-button",e.innerHTML="\u{1F4AC}",e.style.position="fixed",e.style.bottom="20px",e.style.right="20px",e.style.width="50px",e.style.height="50px",e.style.backgroundColor=x,e.style.color="white",e.style.borderRadius="50%",e.style.display="flex",e.style.justifyContent="center",e.style.alignItems="center",e.style.fontSize="24px",e.style.cursor="pointer",e.style.boxShadow="0 4px 15px rgba(0, 0, 0, 0.3)",e.style.userSelect="none",e.addEventListener("mouseover",()=>{e.style.backgroundColor=c}),e.addEventListener("mouseout",()=>{e.style.backgroundColor=x}),document.body.appendChild(e);let I=document.createElement("div");document.body.appendChild(I),window.addEventListener("resize",()=>{let o=window.innerHeight*.007;document.documentElement.style.setProperty("--vh",`${o}px`)});let S=I.attachShadow({mode:"open"}),T=document.createElement("style");T.textContent=`
 /* Chatbot container with solid border */
 #chatbot-container {
     position: fixed;
@@ -36,7 +36,7 @@
     right: 20px;
     width: 50px;
     height: 50px;
-    background-color: ${u};
+    background-color: ${x};
     color: white;
     border-radius: 50%;
     display: flex;
@@ -50,12 +50,12 @@
 }
 
 #chatbot-button:hover {
-    background-color: ${p};
+    background-color: ${c};
 }
 
 /* Navbar styling */
 #chatbot-navbar {
-    background-color: ${p};
+    background-color: ${c};
     padding: 10px;
     color: white;
     font-size: 18px;
@@ -112,7 +112,7 @@
 
 /* User message */
 #chat-messages .user {
-    background-color: ${u};
+    background-color: ${x};
     color: white;
     float: right;
     margin-left: 30px;
@@ -147,7 +147,7 @@
 #chatbot-container .input-box button {
     padding: 12px;  /* Adjusted padding */
     margin-left: 10px;
-    background-color: ${u};
+    background-color: ${x};
     color: white;
     border: none;
     border-radius: 5px;
@@ -155,7 +155,7 @@
 }
 
 #chatbot-container .input-box button:hover {
-    background-color: ${p};
+    background-color: ${c};
 }
 
 /* Responsive Design for Mobile */
@@ -168,7 +168,7 @@
         height: 40px;
         font-size: 20px;
         border-radius: 50%;
-        background-color: ${p};
+        background-color: ${c};
         color: white;
         text-align: center;
         position: sticky;
@@ -223,7 +223,7 @@
         font-size: 14px;
         padding: 8px;
         border-radius: 5px;
-        background-color: ${p};
+        background-color: ${c};
         color: white;
     }
 
@@ -233,11 +233,11 @@
         font-size: 16px;
         padding: 8px;
         position: relative;
-        background-color: ${p};
+        background-color: ${c};
         color: white;
         
     }
 }
 
 
-    `,E.appendChild(M);let n=document.createElement("div");n.id="chatbot-container",E.appendChild(n);let c=document.createElement("div");c.id="chatbot-navbar";let T=document.createElement("img");T.src=k,c.appendChild(T);let S=document.createElement("span");S.textContent=z,c.appendChild(S);let r=document.createElement("button");r.innerHTML="&minus;",r.style.fontSize="20px",r.style.cursor="pointer",r.style.background="transparent",r.style.border="none",r.style.color="#fff",r.style.marginLeft="auto",c.appendChild(r);let a=document.createElement("button");a.innerHTML="&times;",a.style.fontSize="20px",a.style.cursor="pointer",a.style.background="transparent",a.style.border="none",a.style.color="#fff",c.appendChild(a),n.appendChild(c),r.addEventListener("click",()=>{n.style.display="none",e.style.display="flex"}),a.addEventListener("click",()=>{n.style.display="none",e.style.display="flex",Array.from(t.children).forEach(o=>{o.classList.contains("message")&&o.remove()}),y=!1});let t=document.createElement("div");t.id="chat-messages",n.appendChild(t);let h=document.createElement("div");h.id="info-container",t.appendChild(h);let d=document.createElement("img");d.src=k,d.id="info-logo",h.appendChild(d);let g=document.createElement("p");g.textContent=I,h.appendChild(g),h.style.textAlign="center",h.style.padding="10px",d.style.display="block",d.style.margin="0 auto",d.style.width="50px",d.style.height="50px",d.style.borderRadius="50%",g.style.fontWeight="bold",g.style.marginTop="10px",g.style.color="#333",g.style.fontFamily='-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif',t.style.maxHeight="500px",t.style.padding="10px",t.style.transition="max-height 0.3s ease-in-out";let x=document.createElement("div");x.className="input-box",n.appendChild(x);let l=document.createElement("input");l.id="user-message",l.type="text",l.placeholder="Type a message...",l.autocomplete="off",x.appendChild(l);let b=document.createElement("button");b.id="send-button",b.textContent="Send",x.appendChild(b);let y=!1,B=A;n.style.backgroundColor=B,e.addEventListener("click",()=>{n.style.display==="none"||n.style.display===""?(n.style.display="block",e.style.display="none",y||(m(j,"bot"),y=!0)):(n.style.display="none",e.style.display="flex")});function H(){let o=l.value.trim();o&&(m(o,"user"),l.value="",$(o))}function m(o,s){let f=document.createElement("div");f.className="message "+s,f.innerHTML=o,t.appendChild(f),y?(t.style.overflowY="auto",t.scrollTop=t.scrollHeight):t.style.overflowY="hidden",t.scrollHeight>t.clientHeight&&(t.style.overflowY="auto")}async function $(o){try{let s=document.createElement("div");s.className="message bot thinking-message",s.innerHTML="...",t.appendChild(s),t.scrollTop=t.scrollHeight,new Typewriter(s,{loop:!0,delay:150,cursor:""}).typeString("...").start();let w=await fetch(N,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user_message:o})});if(!w.ok){console.error(`Error: HTTP status ${w.status}`);return}let L=await w.text();try{let v=JSON.parse(L);v.response?setTimeout(()=>{s.remove(),m(v.response,"bot")},2e3):console.error('Response does not contain "response" field')}catch(v){console.error("Error parsing response as JSON:",v),setTimeout(()=>{s.remove(),m(L,"bot")},2e3)}}catch(s){console.error("Error:",s),thinkingMessage.remove(),m("Sorry, there was an error processing your request.","bot")}}b.addEventListener("click",H),l.addEventListener("keypress",function(o){o.key==="Enter"&&(o.preventDefault(),H())})};})();
+    `,S.appendChild(T);let n=document.createElement("div");n.id="chatbot-container",S.appendChild(n);let g=document.createElement("div");g.id="chatbot-navbar";let H=document.createElement("img");H.src=M,g.appendChild(H);let z=document.createElement("span");z.textContent=N,g.appendChild(z);let i=document.createElement("button");i.innerHTML="&minus;",i.style.fontSize="20px",i.style.cursor="pointer",i.style.background="transparent",i.style.border="none",i.style.color="#fff",i.style.marginLeft="auto",g.appendChild(i);let a=document.createElement("button");a.innerHTML="&times;",a.style.fontSize="20px",a.style.cursor="pointer",a.style.background="transparent",a.style.border="none",a.style.color="#fff",g.appendChild(a),n.appendChild(g),i.addEventListener("click",()=>{n.style.display="none",e.style.display="flex"}),a.addEventListener("click",()=>{n.style.display="none",e.style.display="flex",Array.from(t.children).forEach(o=>{o.classList.contains("message")&&o.remove()}),v=!1});let t=document.createElement("div");t.id="chat-messages",n.appendChild(t);let u=document.createElement("div");u.id="info-container",t.appendChild(u);let l=document.createElement("img");l.src=M,l.id="info-logo",u.appendChild(l);let m=document.createElement("p");m.textContent=A,u.appendChild(m),u.style.textAlign="center",u.style.padding="10px",l.style.display="block",l.style.margin="0 auto",l.style.width="50px",l.style.height="50px",l.style.borderRadius="50%",m.style.fontWeight="bold",m.style.marginTop="10px",m.style.color="#333",m.style.fontFamily='-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif',t.style.maxHeight="500px",t.style.padding="10px",t.style.transition="max-height 0.3s ease-in-out";let y=document.createElement("div");y.className="input-box",n.appendChild(y);let d=document.createElement("input");d.id="user-message",d.type="text",d.placeholder="Type a message...",d.autocomplete="off",y.appendChild(d);let f=document.createElement("button");f.id="send-button",f.textContent="Send",y.appendChild(f);let v=!1,U=R;n.style.backgroundColor=U,e.addEventListener("click",()=>{n.style.display==="none"||n.style.display===""?(n.style.display="block",e.style.display="none",v||(p(B,"bot"),v=!0)):(n.style.display="none",e.style.display="flex")});function L(){let o=d.value.trim();o&&(p(o,"user"),d.value="",F(o))}function p(o,s){let h=document.createElement("div");h.className="message "+s,h.innerHTML=o,t.appendChild(h),v?(t.style.overflowY="auto",t.scrollTop=t.scrollHeight):t.style.overflowY="hidden",t.scrollHeight>t.clientHeight&&(t.style.overflowY="auto")}async function F(o){try{let s=document.createElement("div");s.className="message bot thinking-message",s.innerHTML="",t.appendChild(s),t.scrollTop=t.scrollHeight;let h=["",".","..","...","...."],b=0,C=1,w=setInterval(()=>{s.innerHTML=h[b],b+=C,b===h.length?(C=-1,b=h.length-2):b<0&&(C=1,b=1)},150),E=await fetch($,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user_message:o})});if(!E.ok){console.error(`Error: HTTP status ${E.status}`),clearInterval(w),s.remove(),p("Sorry, there was an error fetching the response.","bot");return}let j=await E.text();try{let k=JSON.parse(j);k.response?setTimeout(()=>{clearInterval(w),s.remove(),p(k.response,"bot")},2e3):(console.error('Response does not contain "response" field'),clearInterval(w),s.remove(),p("Sorry, the response format was unexpected.","bot"))}catch(k){console.error("Error parsing response as JSON:",k),setTimeout(()=>{clearInterval(w),s.remove(),p(j,"bot")},2e3)}}catch(s){console.error("Error:",s),clearInterval(typingInterval),thinkingMessage.remove(),p("Sorry, there was an error processing your request.","bot")}}f.addEventListener("click",L),d.addEventListener("keypress",function(o){o.key==="Enter"&&(o.preventDefault(),L())})};})();
