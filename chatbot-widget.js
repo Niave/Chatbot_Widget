@@ -53,11 +53,11 @@ window.initChatbot = function initChatbot(config = {}) {
 
     // Hover effect for the button
     chatbotButton.addEventListener('mouseover', () => {
-        chatbotButton.style.backgroundColor = buttonHoverColor; // darker copper
+        chatbotButton.style.backgroundColor = buttonHoverColor; //lighter colour
     });
 
     chatbotButton.addEventListener('mouseout', () => {
-        chatbotButton.style.backgroundColor = buttonColor; // Original copper color
+        chatbotButton.style.backgroundColor = buttonColor;  // darker colour
     });
 
     // Append the button to the document body directly
@@ -253,12 +253,11 @@ window.initChatbot = function initChatbot(config = {}) {
         bottom: 0px;
         right: 0px;
         width: 100%;
-        height:100%;
-        max-height:${MobileChatHeight};
+        min-height:${MobileChatHeight};
         max-width: 350px;
         background-color: white;
-        overflow-y: auto;
-        display: flex;
+        overflow: hidden;
+        display: none;
         flex-direction: column;
         transition: all 0.3s ease; /* Smooth transition */
     }
@@ -316,7 +315,7 @@ window.initChatbot = function initChatbot(config = {}) {
 
     // Create the chatbot container in the shadow DOM
     const chatbotContainer = document.createElement('div');
-    chatbotContainer.id = 'chatbot-container';
+    chatbotContainer.id = 'chatbot-container'; 
     shadowRoot.appendChild(chatbotContainer);
 
     // Create navbar for chatbot with logo and title
@@ -377,8 +376,20 @@ window.initChatbot = function initChatbot(config = {}) {
         greetingShown = false;
     });
 
+        // Add event listener to minimize when clicking outside the chatbot
+        document.addEventListener('click', (event) => {
+            // If click is outside the chatbot container and the floating button, minimize the chatbot
+            if (!chatbotContainer.contains(event.target) && !chatbotButton.contains(event.target)) {
+                chatbotContainer.style.display = 'none';  // Hide the chatbot
+                chatbotButton.style.display = 'flex';     // Show the floating button again
+            }
+        });
     
-
+        // Prevent the event listener on 'document' from firing if the click was inside the chatbot
+        chatbotContainer.addEventListener('click', (event) => {
+            event.stopPropagation(); // This prevents the click event from propagating to the document
+        });
+   
 
     // Create message container
     const chatMessages = document.createElement('div');
@@ -450,8 +461,8 @@ window.initChatbot = function initChatbot(config = {}) {
     const backgroundColor = customBackgroundColor; // Adjust this as needed (light background color)
 
     // Set background color for chatbot container
-    chatbotContainer.style.backgroundColor = backgroundColor;
-
+    chatbotContainer.style.backgroundColor = backgroundColor;  
+    
     
     // Toggle chatbot visibility
     chatbotButton.addEventListener('click', () => {
@@ -587,7 +598,7 @@ window.initChatbot = function initChatbot(config = {}) {
         }
     }
 
-    
+ 
     
     // Add event listener for the send button
     sendButton.addEventListener('click', sendMessage);

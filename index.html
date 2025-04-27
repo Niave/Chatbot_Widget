@@ -5,30 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <script src="chatbot-widget.js"></script>
+    <script  src="chatbot-widget.js"></script>
     <script>
-      const config = {
-		        botName: 'Najib HelseOrganisasjon Cahtbot',  // Set the botName to 'me'
-		        logoSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOBTooVNjM8gmq-gCdpg5JP63e-m7hfiD-cA&s',
-				assistantTitle:'This Najib HelseOrganisasjon Bot',
-				greetingHTML:`
-        <div style="display: flex; align-items: center; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', sans-serif; color: #333; line-height: 1.6; font-size: 16px;">
-         <div>
-           <p style="margin-bottom: 15px;">Hei og velkommen!</p>
-           <p style="margin-bottom: 15px;">What we do, ask us!</p>
-           <p style="margin-bottom: 15px;">Ta gjerne kontakt på 
-             <a href="mailto:kundeservice@clientley.no" style="color: #1a73e8; text-decoration: none;">kundeservice@clientley.no</a> hvis du vil vite mer.
-           </p>
-           <p style="font-size: 15px; font-weight: bold; color: #333; margin-top: 15px;">Hva vil du teste i dag?</p>
-         </div>
-        </div>`,
-		buttonColor: '#007BFF', // A bold, modern blue
-		buttonHoverColor: '#0056b3', // Darker blue for hover effect
-		customBackgroundColor: '#ffffff', // Clean white background
-		    };
-        // Call the chatbot after the page loads
-        window.onload = function () {
-            initChatbot(config);  // Or pass config if needed
+         window.onload = function() {
+          if (typeof window.initChatbot === 'function') {
+            window.initChatbot({
+                botName: 'Najib HelseOrganisasjon Cahtbot',  // Set the botName to 'me'
+                logoSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOBTooVNjM8gmq-gCdpg5JP63e-m7hfiD-cA&s',
+                    assistantTitle:'This Najib HelseOrganisasjon Bot',
+                    greetingHTML:`
+                    <div style="display: flex; align-items: center; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', sans-serif; color: #333; line-height: 1.6; font-size: 16px;">
+                    <div>
+                      <p style="margin-bottom: 15px;">Hei og velkommen!</p>
+                      <p style="margin-bottom: 15px;">What we do, ask us!</p>
+                      <p style="margin-bottom: 15px;">Ta gjerne kontakt på 
+                        <a href="mailto:kundeservice@clientley.no" style="color: #1a73e8; text-decoration: none;">kundeservice@clientley.no</a> hvis du vil vite mer.
+                      </p>
+                      <p style="font-size: 15px; font-weight: bold; color: #333; margin-top: 15px;">Hva vil du teste i dag?</p>
+                    </div>
+                    </div>`,
+                buttonColor: '#007BFF', // A bold, modern blue
+                buttonHoverColor: '#0056b3', // Darker blue for hover effect
+                customBackgroundColor: '#ffffff', // Clean white background
+                MobileChatHeight: '570px'
+            }); 
+          }
+          else {
+            console.error("initChatbot function not found!");
+          }
         };
     </script>
 </body>
