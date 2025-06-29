@@ -1,0 +1,9 @@
+{
+  "botName": "ViaNordAI",
+  "assistantTitle": "ViaNordAI",
+  "greetingHTML": "<p>Hei! Hvordan kan jeg hjelpe deg i dag?</p>",
+  "logoSrc": "https://cdn.jsdelivr.net/gh/Niave/BizWeb@main/images/buinesslogonotextcircle.png",
+  "buttonColor": "#3C84A7",
+  "buttonHoverColor": "#2F6C8A",
+  "MobileChatHeight": "590px"
+}

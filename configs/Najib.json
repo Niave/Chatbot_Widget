@@ -1,0 +1,10 @@
+{
+    "botName": "Najib HelseOrganisasjon Chatbot",
+    "logoSrc": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOBTooVNjM8gmq-gCdpg5JP63e-m7hfiD-cA&s",
+    "assistantTitle": "This Najib HelseOrganisasjon Bot",
+    "greetingHTML": "<div style=\"display: flex; align-items: center; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', sans-serif; color: #333; line-height: 1.6; font-size: 16px;\">\n    <div>\n        <p style=\"margin-bottom: 15px;\">Hei og velkommen!</p>\n        <p style=\"margin-bottom: 15px;\">What we do, ask us!</p>\n        <p style=\"margin-bottom: 15px;\">Ta gjerne kontakt på \n            <a href=\"mailto:kundeservice@clientley.no\" style=\"color: #1a73e8; text-decoration: none;\">kundeservice@clientley.no</a> hvis du vil vite mer.\n        </p>\n        <p style=\"font-size: 15px; font-weight: bold; color: #333; margin-top: 15px;\">Hva vil du teste i dag?</p>\n    </div>\n</div>",
+    "buttonColor": "#007BFF",
+    "buttonHoverColor": "#0056b3",
+    "customBackgroundColor": "#ffffff",
+    "MobileChatHeight": "570px"
+}
