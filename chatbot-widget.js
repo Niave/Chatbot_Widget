@@ -1,45 +1,3 @@
-(function autoLoadChatbotConfig() {
-  // Only run if chatbot isn't initialized yet
-  if (window.chatbotInitialized) return;
-
-  function getConfigName() {
-    // Try to get config name from URL query (iframe embed or script include)
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('config')) return params.get('config');
-
-    // If no config query param exists, return null to continue with defaults
-    return null;
-  }
-
-  const configName = getConfigName();
-
-  // If no configName is found, we just skip the fetch and continue with the defaults
-  if (!configName) {
-    console.log("No config provided, using defaults.");
-    window.initChatbot(); // Continue with default values as per the original code
-    return;
-  }
-
-  const configURL = `https://raw.githubusercontent.com/Niave/Chatbot_Widget/main/configs/${configName}.json`;
-
-  fetch(configURL)
-    .then(res => {
-      if (!res.ok) throw new Error(`Config not found: ${configName}`);
-      return res.json();
-    })
-    .then(config => {
-      if (typeof window.initChatbot === 'function') {
-        window.initChatbot(config);
-      } else {
-        console.error("initChatbot function not available yet.");
-        setTimeout(() => window.initChatbot?.(config), 300);
-      }
-    })
-    .catch(err => {
-      console.error("Error loading chatbot config:", err);
-    });
-})();
-
 
 window.initChatbot = function initChatbot(config = {}) {
     if (window.chatbotInitialized) return;
@@ -701,3 +659,45 @@ window.initChatbot = function initChatbot(config = {}) {
         }
     });
 };
+
+(function autoLoadChatbotConfig() {
+  // Only run if chatbot isn't initialized yet
+  if (window.chatbotInitialized) return;
+
+  function getConfigName() {
+    // Try to get config name from URL query (iframe embed or script include)
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('config')) return params.get('config');
+
+    // If no config query param exists, return null to continue with defaults
+    return null;
+  }
+
+  const configName = getConfigName();
+
+  // If no configName is found, we just skip the fetch and continue with the defaults
+  if (!configName) {
+    console.log("No config provided, using defaults.");
+    window.initChatbot(); // Continue with default values as per the original code
+    return;
+  }
+
+  const configURL = `https://raw.githubusercontent.com/Niave/Chatbot_Widget/main/configs/${configName}.json`;
+
+  fetch(configURL)
+    .then(res => {
+      if (!res.ok) throw new Error(`Config not found: ${configName}`);
+      return res.json();
+    })
+    .then(config => {
+      if (typeof window.initChatbot === 'function') {
+        window.initChatbot(config);
+      } else {
+        console.error("initChatbot function not available yet.");
+        setTimeout(() => window.initChatbot?.(config), 300);
+      }
+    })
+    .catch(err => {
+      console.error("Error loading chatbot config:", err);
+    });
+})();
