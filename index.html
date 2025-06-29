@@ -1,39 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot Widget</title>
+  <meta charset="UTF-8">
+  <title>Chatbot Widget</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
-    <script>
-    const chatbotScript = document.createElement('script');
-    chatbotScript.src = 'https://cdn.jsdelivr.net/gh/Niave/Chatbot_Widget@latest/chatbot-widget.js';
-    chatbotScript.defer = true;
-    document.body.appendChild(chatbotScript);
-
-    chatbotScript.onload = function() {
-        const params = new URLSearchParams(window.location.search);
-        const configName = params.get('config') || 'default';
-
-        const configURL = `https://raw.githubusercontent.com/Niave/Chatbot_Widget/main/configs/${configName}.json`;
-
-        fetch(configURL)
-            .then(res => {
-                if (!res.ok) throw new Error(`Config not found: ${configName}`);
-                return res.json();
-            })
-            .then(config => {
-                if (typeof window.initChatbot === 'function') {
-                    window.initChatbot(config);
-                } else {
-                    console.error("initChatbot function not available.");
-                }
-            })
-            .catch(err => {
-                console.error("Error loading chatbot config:", err);
-            });
-    };
+ <script>
+  const chatbotScript = document.createElement('script');
+  chatbotScript.src = 'https://cdn.jsdelivr.net/gh/Niave/Chatbot_Widget@946d14e/chatbot-widget.js';
+  chatbotScript.defer = true;
+  document.body.appendChild(chatbotScript);
+  console.log("Chatbot script loaded!");
 </script>
 </body>
 </html>

@@ -16,7 +16,7 @@
   // If no configName is found, we just skip the fetch and continue with the defaults
   if (!configName) {
     console.log("No config provided, using defaults.");
-    window.initChatbot?.(); // Continue with default values as per the original code
+    window.initChatbot(); // Continue with default values as per the original code
     return;
   }
 
