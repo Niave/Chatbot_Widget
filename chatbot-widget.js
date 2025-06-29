@@ -7,33 +7,37 @@
     const params = new URLSearchParams(window.location.search);
     if (params.has('config')) return params.get('config');
 
-    // Fallback: Try to guess config from referrer domain
-    const ref = document.referrer;
-    if (ref.includes('vianordai.no')) return 'vianordai';
-    if (ref.includes('someotherclient.com')) return 'someotherclient';
-
-    return 'default'; // fallback
+    // If no config query param exists, return null to continue with defaults
+    return null;
   }
 
- const configName = getConfigName();
- const configURL = `https://raw.githubusercontent.com/Niave/Chatbot_Widget/main/configs/${configName}.json`;
+  const configName = getConfigName();
 
-fetch(configURL)
-  .then(res => {
-    if (!res.ok) throw new Error(`Config not found: ${configName}`);
-    return res.json();
-  })
-  .then(config => {
-    if (typeof window.initChatbot === 'function') {
-      window.initChatbot(config);
-    } else {
-      console.error("initChatbot function not available yet.");
-      setTimeout(() => window.initChatbot?.(config), 300);
-    }
-  })
-  .catch(err => {
-    console.error("Error loading chatbot config:", err);
-  });
+  // If no configName is found, we just skip the fetch and continue with the defaults
+  if (!configName) {
+    console.log("No config provided, using defaults.");
+    window.initChatbot?.(); // Continue with default values as per the original code
+    return;
+  }
+
+  const configURL = `https://raw.githubusercontent.com/Niave/Chatbot_Widget/main/configs/${configName}.json`;
+
+  fetch(configURL)
+    .then(res => {
+      if (!res.ok) throw new Error(`Config not found: ${configName}`);
+      return res.json();
+    })
+    .then(config => {
+      if (typeof window.initChatbot === 'function') {
+        window.initChatbot(config);
+      } else {
+        console.error("initChatbot function not available yet.");
+        setTimeout(() => window.initChatbot?.(config), 300);
+      }
+    })
+    .catch(err => {
+      console.error("Error loading chatbot config:", err);
+    });
 })();
 
 
