@@ -1,3 +1,41 @@
+(function autoLoadChatbotConfig() {
+  // Only run if chatbot isn't initialized yet
+  if (window.chatbotInitialized) return;
+
+  function getConfigName() {
+    // Try to get config name from URL query (iframe embed or script include)
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('config')) return params.get('config');
+
+    // Fallback: Try to guess config from referrer domain
+    const ref = document.referrer;
+    if (ref.includes('vianordai.no')) return 'vianordai';
+    if (ref.includes('someotherclient.com')) return 'someotherclient';
+
+    return 'default'; // fallback
+  }
+
+ const configName = getConfigName();
+ const configURL = `https://raw.githubusercontent.com/Niave/Chatbot_Widget/main/configs/${configName}.json`;
+
+fetch(configURL)
+  .then(res => {
+    if (!res.ok) throw new Error(`Config not found: ${configName}`);
+    return res.json();
+  })
+  .then(config => {
+    if (typeof window.initChatbot === 'function') {
+      window.initChatbot(config);
+    } else {
+      console.error("initChatbot function not available yet.");
+      setTimeout(() => window.initChatbot?.(config), 300);
+    }
+  })
+  .catch(err => {
+    console.error("Error loading chatbot config:", err);
+  });
+})();
+
 
 window.initChatbot = function initChatbot(config = {}) {
     if (window.chatbotInitialized) return;
@@ -368,7 +406,8 @@ window.initChatbot = function initChatbot(config = {}) {
     
         // Clear only the chat history, not the entire container
         Array.from(chatMessages.children).forEach(child => {
-            if (child.classList.contains('message')) {
+            if (child.classList.contains('message') ||
+            child.classList.contains('clickable-element')) {
                 child.remove();  // Remove only dynamic chat messages (user and bot messages)
             }
         });
@@ -492,6 +531,7 @@ window.initChatbot = function initChatbot(config = {}) {
             sendMessageToMake(userMessage);
         }
     }
+    
 
       // Function to display messages
       function displayMessage(message, sender) {
@@ -516,6 +556,56 @@ window.initChatbot = function initChatbot(config = {}) {
             chatMessages.style.overflowY = 'auto'; // Enable scroll if overflow occurs
         }
     }
+
+    function handleBotResponse(data) {
+        // Check if there's a regular message to display
+        if (data.response) {
+            displayMessage(data.response, 'bot');  // Display regular message
+        }
+    
+        // Handle clickable elements (links and buttons)
+        if (data.links && data.links.length > 0) {
+            data.links.forEach(link => {
+                displayClickableElement(link.label, link.url);  // Display each link as a clickable element
+            });
+        }
+
+    }
+    function displayClickableElement(label, url) {
+        const clickableElement = document.createElement('div');
+        clickableElement.className = 'clickable-element';  // No 'message' or 'bot' class here
+        
+        // Create a button that behaves like a link
+        clickableElement.innerHTML = `
+            <button 
+                onclick="window.open('${url}', '_blank')" 
+                style="
+                    background: linear-gradient(145deg, #ff7f50, #e65c00);
+                    color: white;
+                    padding: 12px 20px;
+                    border: none;
+                    border-radius: 25px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                    transition: all 0.3s ease;
+                "
+                onmouseover="this.style.background='linear-gradient(145deg, #ff6a33, #e65c00)'; this.style.boxShadow='0 8px 20px rgba(0, 0, 0, 0.15)';"
+                onmouseout="this.style.background='linear-gradient(145deg, #ff7f50, #e65c00)'; this.style.boxShadow='0 4px 10px rgba(0, 0, 0, 0.1)';">
+                ${label}
+            </button>
+        `;
+        
+        // Add margin-bottom to create space below the clickable element
+        clickableElement.style.marginBottom = '15px'; // Adjust the value as needed
+        
+        // Append the clickable button element directly to the chat messages container (no bubble around it)
+        chatMessages.appendChild(clickableElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight;  // Scroll to the latest message
+    }
+    
     
     // Send message to external service
     async function sendMessageToMake(message) {
@@ -570,11 +660,9 @@ window.initChatbot = function initChatbot(config = {}) {
             try {
                 const data = JSON.parse(responseText);
                 if (data.response) {
-                    setTimeout(() => {
                         clearInterval(typingInterval);
                         thinkingMessage.remove();
-                        displayMessage(data.response, 'bot');
-                    }, 2000);
+                        handleBotResponse(data);
                 } else {
                     console.error('Response does not contain "response" field');
                     clearInterval(typingInterval);
@@ -583,11 +671,9 @@ window.initChatbot = function initChatbot(config = {}) {
                 }
             } catch (jsonError) {
                 console.error('Error parsing response as JSON:', jsonError);
-                setTimeout(() => {
                     clearInterval(typingInterval);
                     thinkingMessage.remove();
                     displayMessage(responseText, 'bot');
-                }, 2000);
             }
 
         } catch (error) {
