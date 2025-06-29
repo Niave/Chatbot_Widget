@@ -102,6 +102,7 @@ window.initChatbot = function initChatbot(config = {}) {
 
 /* Chatbot button */
 #chatbot-button {
+    pointer-events: auto;
     position: fixed;
     bottom: 20px;
     right: 20px;
