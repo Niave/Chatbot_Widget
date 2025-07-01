@@ -489,6 +489,8 @@ window.initChatbot = function initChatbot(config = {}) {
         if (window.frameElement) {
             window.frameElement.style.width = '400px';
             window.frameElement.style.height = '600px';
+            console.log('Current frameElement:', window.frameElement);
+
         }
         if (!greetingShown) {
             // Display formatted greeting message inside the message container
@@ -502,6 +504,7 @@ window.initChatbot = function initChatbot(config = {}) {
         if (window.frameElement) {
             window.frameElement.style.width = '50px';
             window.frameElement.style.height = '50px';
+            console.log('Current frameElement:', window.frameElement);
         }
     }
 });
