@@ -359,6 +359,11 @@ window.initChatbot = function initChatbot(config = {}) {
     minimizeButton.addEventListener('click', () => {
         chatbotContainer.style.display = 'none';  // Hide the UI
         chatbotButton.style.display = 'flex';   // Show the floating button again
+        //  Shrink iframe
+        if (window.frameElement) {
+            window.frameElement.style.width = '50px';
+            window.frameElement.style.height = '50px';
+        }
     });
     
     // Exit button event: Close the chatbot and reset the chat
@@ -366,7 +371,11 @@ window.initChatbot = function initChatbot(config = {}) {
         // Hide the chatbot and show the floating button again
         chatbotContainer.style.display = 'none';
         chatbotButton.style.display = 'flex';  // Show the floating button again
-    
+        // Shrink iframe back
+        if (window.frameElement) {
+            window.frameElement.style.width = '50px';
+            window.frameElement.style.height = '50px';
+        }
         // Clear only the chat history, not the entire container
         Array.from(chatMessages.children).forEach(child => {
             if (child.classList.contains('message') ||
@@ -384,6 +393,11 @@ window.initChatbot = function initChatbot(config = {}) {
             if (!chatbotContainer.contains(event.target) && !chatbotButton.contains(event.target)) {
                 chatbotContainer.style.display = 'none';  // Hide the chatbot
                 chatbotButton.style.display = 'flex';     // Show the floating button again
+                // Shrink iframe
+                if (window.frameElement) {
+                    window.frameElement.style.width = '50px';
+                    window.frameElement.style.height = '50px';
+                }
             }
         });
     
@@ -471,6 +485,11 @@ window.initChatbot = function initChatbot(config = {}) {
     if (chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '') {
         chatbotContainer.style.display = 'block';
         chatbotButton.style.display = 'none';  // Hide the floating button when the UI is open
+        //Expand Iframe on parent page
+        if (window.frameElement) {
+            window.frameElement.style.width = '400px';
+            window.frameElement.style.height = '600px';
+        }
         if (!greetingShown) {
             // Display formatted greeting message inside the message container
             displayMessage(greetingHTML, 'bot');
@@ -479,6 +498,11 @@ window.initChatbot = function initChatbot(config = {}) {
     } else {
         chatbotContainer.style.display = 'none';  // Hide the UI when it's already visible
         chatbotButton.style.display = 'flex';   // Show the floating button again
+         // Shrink the iframe on parent page
+        if (window.frameElement) {
+            window.frameElement.style.width = '50px';
+            window.frameElement.style.height = '50px';
+        }
     }
 });
 
